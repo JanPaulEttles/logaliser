@@ -9,7 +9,7 @@ var LevelEnum = {
   FATAL: 5,
 };
 
-var LEVEL = LevelEnum.TRACE;
+var LEVEL = LevelEnum.INFO;
 
 module.exports = {
 	trace: function(message) {

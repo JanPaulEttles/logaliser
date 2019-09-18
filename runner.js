@@ -6,108 +6,141 @@ const yargs = require('yargs');
 const async = require('async');
 
 const logger = require('./logger.js');
+const headers = require('./headers.js');
 
-
+const creditcards = require('./creditcards.js');
+const methods = require('./methods.js');
+const sqli = require('./sqli.js');
+const xss = require('./xss.js');
+const statuscodes = require('./statuscodes.js');
+const useragents = require('./useragents.js');
+const payloads = require('./payloads.js');
 
 /*
-*	Parse the arguements
-*/
-const argv = yargs
-  	.usage('Iterate over a file of URLs and fetch information about them.\n\n')
-	.version('version').alias('version', 'v')
-  	.help('help').alias('help', 'h')
-  	.options({
-    	input: {
-	      	alias: 'i',
-   		   	description: "<filename> Input file name",
-      		requiresArg: true,
-		    required: true
-    	}
-	}).argv;
-
-
-fs.createReadStream(argv.input)
-    .pipe(csv.parse())
-    .on('error', error => console.error(error))
-    .on('data', row => process(row))
-    .on('end', rowCount => console.log(`Parsed ${rowCount} rows`));
-
-
-function process(data) {
-
 	var rr = {
 		servername: {},
 	    request: {
 	      http: {
 	      	url: {}
-	      },
-	      https: {
-	      	url: {}
-	      }
-	    },
-	    response: {
-	      http: {
-	        response: {},
-	        body: {}
-	      },
-	      https: {
-	      	certificate: {
-	      		subjectAlternateName: {},
-	      		validity: {
-	      			from: {},
-	      			to: {}
-	      		}
-	      	},
-	      	tls: {
-	      		tsl1Enabled: {},
-	      		tsl1_1Enabled: {},
-	      		tsl1_2Enabled: {},
-	      		tsl1_3Enabled: {}
-	      	},
-	        response: {},
-	        body: {}
 	      }
 	    }
 	};
+*/
 
-	rr.servername = data[1];
-	rr.request.http.url = 'http://' + data[1];
-	rr.request.https.url = 'https://' + data[1];
+/*
+*	Parse the arguements
+*/
+const argv = yargs
+  	.usage('Iterate over a web access file and look for security stuff.\n\n')
+	.version('version').alias('version', 'v')
+  	.help('help').alias('help', 'h')
+  	.options({
+    	input: {
+	      	alias: 'i',
+   		   	description: "<filename> Log file name",
+      		requiresArg: true,
+		    required: true
+    	},
+    	config: {
+	      	alias: 'c',
+   		   	description: "<filename> Config file name",
+      		requiresArg: true,
+		    required: true
+    	}    	
+	}).argv;
 
-	async.series([
+
+headers.load(argv.config, function(err, result) {
+	if (err) { logger.error(`** request.get: error >> ${err}`); }   		
+	parseLog();
+});
+
+function parseLog() {
+	fs.createReadStream(argv.input)
+	    .pipe(csv.parse({ delimiter: '\t' }))
+	    .on('error', error => logger.error(error))
+	    .on('data', row => process(row))
+	    .on('end', rowCount => complete(rowCount));
+}
+
+function complete(rowCount) {
+
+	logger.trace(`Parsed ${rowCount} rows`)
+
+	statuscodes.results(function(result) {	
+
+	});
+}
+
+function process(data) {
+	//logger.info(`data[0] : ${data[0]}`);
+	//logger.info(headers.getPosition(headers.REQUEST));
+	async.series([	
 	    function(callback) {
-			logger.trace('** process url http: ' + rr.request.http.url);
-    		request.get(rr.request.http.url, function(err, response, body) {
-        		if (err) { logger.error('** request.get: error >> ' + err); return callback(err); }        		
+			logger.trace(`** process request: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		//logger.info(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 
-				rr.response.https.response = response;
-        		rr.response.http.body = body;
-        		callback();
-      		});
-    	},	    	
+       		creditcards.scan(data[headers.getPosition(headers.REQUEST)], function(result) {
+
+       		});
+       		callback();
+    	},
+	    function(callback) {
+			logger.trace(`** check http methods: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		methods.scan(data[headers.getPosition(headers.REQUEST)], function(result) {
+       		
+       		});
+       		callback();
+    	},
     	function(callback) {
-      		logger.trace('** something else');
+			logger.trace(`** check sqli: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		sqli.scan(data[headers.getPosition(headers.REQUEST)], function(result) {
+
+       		});
+       		callback();
+    	},
+    	function(callback) {
+			logger.trace(`** check xss: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		xss.scan(data[headers.getPosition(headers.REQUEST)], function(result) {
+
+       		});
+       		callback();
+    	},    	
+    	function(callback) {
+			logger.trace(`** check status codes: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		statuscodes.scan(data[headers.getPosition(headers.SOURCE)], data[headers.getPosition(headers.STATUSCODE)], function(result) {
+
+       		});
+       		callback();
+    	},
+		function(callback) {
+			logger.trace(`** check useragents: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		useragents.scan(data[headers.getPosition(headers.USERAGENT)], function(result) {
+
+       		});
+       		callback();
+    	},
+		function(callback) {
+			logger.trace(`** check payloads: `);
+       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }        		
+       		payloads.scan(data[headers.getPosition(headers.REQUEST)], function(result) {
+
+       		});
+       		callback();
+    	},    	
+    	function(callback) {
+      		logger.trace(`** something else`);
 	        callback();
       	}      	
 	],
 	function(err, results) {
-		logger.info(rr.servername);
-		//console.log(rr.response.http.headers);
-		logger.info(rr.response.https.tls.tsl1Enabled);
-		logger.info(rr.response.https.tls.tsl1_1Enabled);
-		logger.info(rr.response.https.tls.tsl1_2Enabled);
-		logger.info(rr.response.https.tls.tsl1_3Enabled);
-		
+
+		logger.trace(`done`);
 	});	
 }
-
-
-
-
-
-
-
-
-
-
-
