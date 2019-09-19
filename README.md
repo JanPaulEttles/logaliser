@@ -19,6 +19,8 @@ git add .
 
 git commit -m "initial"
 
+git commit -a
+
 git push origin master
 
 

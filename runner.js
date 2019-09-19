@@ -36,16 +36,16 @@ const argv = yargs
   	.help('help').alias('help', 'h')
   	.options({
     	input: {
-	      	alias: 'i',
-   		   	description: "<filename> Log file name",
-      		requiresArg: true,
-		    required: true
+			alias: 'i',
+			description: "<filename> Log file name",
+			requiresArg: true,
+			required: true
     	},
     	config: {
-	      	alias: 'c',
-   		   	description: "<filename> Config file name",
-      		requiresArg: true,
-		    required: true
+			alias: 'c',
+			description: "<filename> Config file name",
+			requiresArg: true,
+			required: true
     	},
     	creditcards: {
       		description: 'Scan for creditcards in the requests',
