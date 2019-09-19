@@ -50,17 +50,47 @@ const argv = yargs
     	creditcards: {
       		description: 'Scan for creditcards in the requests',
       		boolean: true,
-      		alias: 'cc'
+      		default: false,
+      		alias: 'cards'
     	},
     	methods: {
       		description: 'Scan for incorrect methods in the requests',
       		boolean: true,
-      		alias: 'm'
-    	}   	
+      		default: false,
+      		alias: 'methods'
+    	},
+    	xss: {
+      		description: 'Scan for xss in the requests',
+      		boolean: true,
+      		default: false,
+      		alias: 'xss'
+    	},
+    	sqli: {
+      		description: 'Scan for sqli in the requests',
+      		boolean: true,
+      		default: false,
+      		alias: 'sqli'
+    	},
+    	statuscodes: {
+      		description: 'Scan for statuscodes against sources',
+      		boolean: true,
+      		default: false,
+      		alias: 'statuscodes'
+    	},
+    	useragents: {
+      		description: 'Scan for odd useragents',
+      		boolean: true,
+      		default: false,
+      		alias: 'useragents'
+    	},
+    	payloads: {
+      		description: 'Scan for suspicious payloads',
+      		boolean: true,
+      		default: false,
+      		alias: 'payloads'
+    	}
 	}).argv;
 
-logger.info(argv.cc);
-logger.info(argv.m);
 
 headers.load(argv.config, function(err, result) {
 	if (err) { logger.error(`** request.get: error >> ${err}`); }   		
@@ -85,32 +115,41 @@ function complete(rowCount) {
 }
 
 function process(data) {
-	//logger.info(`data[0] : ${data[0]}`);
-	//logger.info(headers.getPosition(headers.REQUEST));
 	async.series([	
 	    function(callback) {
-			logger.trace(`** process request: `);
-       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-       		logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
-       		logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
+	    	if(argv.creditcards) {
+				logger.trace(`** check for credit cards: `);
+	       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+	       		logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 
-       		creditcards.scan(
-       			data[headers.getPosition(headers.REQUEST)], 
-       			data[headers.getPosition(headers.STATUSCODE)],
-       			function(result) {
-       				//do something with the result
-       		});
+	       		creditcards.scan(
+	       			data[headers.getPosition(headers.REQUEST)], 
+	       			function(result) {
+	       				//do something with the result
+	       		});
+	       	}
+	       	else {
+	       		logger.info(`** skipping checks for credit cards: `);
+	       	}
        		callback();
     	},
 	    function(callback) {
-			logger.trace(`** check http methods: `);
-       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-       		logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
-       		methods.scan(
-       			data[headers.getPosition(headers.REQUEST)], 
-       			function(result) {
-       		
-       		});
+	    	if(argv.methods) {	    	
+				logger.trace(`** check http methods: `);
+	       		//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+	       		logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
+	       		logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
+
+	       		methods.scan(
+	       			data[headers.getPosition(headers.REQUEST)], 
+	       			data[headers.getPosition(headers.STATUSCODE)],
+	       			function(result) {
+	       		
+	       		});
+	       	}
+	       	else {
+	       		logger.info(`** skipping checks for methods: `);
+	       	}	       		
        		callback();
     	},
     	function(callback) {
