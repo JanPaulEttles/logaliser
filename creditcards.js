@@ -16,11 +16,10 @@ module.exports = {
 
     logger.trace(input);
 
+    var clean = input.replace(/%20|[-+()\s]/g, '');
+
     cards.forEach(function(card) {
       var regex = new RegExp(card.regex, 'i'); 
-
-      var clean = input.replace(/%20|[-+()\s]/g, '');
-
       if(regex.test(clean)) {
         logger.info(`it could be a ${card.type}: ${regex.exec(clean)[0]}`);
       }
