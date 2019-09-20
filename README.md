@@ -25,7 +25,12 @@ git push origin master
 
 
 
-node runner.js -i test.log -c test.headers
+node runner.js --creditcards --sqli --xss --methods --payloads -i test.log -c test.headers
+node runner.js --no-creditcards --no-sqli --no-xss --no-methods --no-payloads -i test.log -c test.headers
+
+node runner.js --cards --xss --sqli --methods --statuscodes --useragents --payloads -i test.log -c test.headers 
+
+node runner.js --all -i test.log -c test.headers 
 
 
 

@@ -47,6 +47,12 @@ const argv = yargs
 			requiresArg: true,
 			required: true
 		},
+		all: {
+			description: 'Scan using all the modules',
+			boolean: true,
+			default: false,
+			alias: 'all'
+		},
 		creditcards: {
 			description: 'Scan for creditcards in the requests',
 			boolean: true,
@@ -91,11 +97,39 @@ const argv = yargs
 		}
 	}).argv;
 
+init();
 
-headers.load(argv.config, function(err, result) {
-	if (err) { logger.error(`** request.get: error >> ${err}`); }
-	parseLog();
-});
+function init() {
+	if (!argv.all) {
+		if (!argv.creditcards) {
+			logger.info(`** skipping checks for credit cards: `);
+		}
+		if (!argv.methods) {
+			logger.info(`** skipping checks for dodgy methods: `);
+		}
+		if (!argv.xss) {
+			logger.info(`** skipping checks for xss: `);
+		}
+		if (!argv.sqli) {
+			logger.info(`** skipping checks for sqli: `);
+		}
+		if (!argv.statuscodes) {
+			logger.info(`** skipping checks for statuscodes: `);
+		}
+		if (!argv.useragents) {
+			logger.info(`** skipping checks for useragents: `);
+		}
+		if (!argv.payloads) {
+			logger.info(`** skipping checks for dodgy payloads: `);
+		}
+	}
+	headers.load(argv.config, function(err, result) {
+		if (err) { logger.error(`** request.get: error >> ${err}`); }
+		parseLog();
+	});
+
+}
+
 
 function parseLog() {
 	fs.createReadStream(argv.input)
@@ -117,7 +151,7 @@ function complete(rowCount) {
 function process(data) {
 	async.series([
 			function(callback) {
-				if (argv.creditcards) {
+				if (argv.all || argv.creditcards) {
 					logger.trace(`** check for credit cards: `);
 					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
@@ -127,13 +161,11 @@ function process(data) {
 						function(result) {
 							//do something with the result
 						});
-				} else {
-					logger.info(`** skipping checks for credit cards: `);
 				}
 				callback();
 			},
 			function(callback) {
-				if (argv.methods) {
+				if (argv.all || argv.methods) {
 					logger.trace(`** check http methods: `);
 					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
@@ -145,66 +177,74 @@ function process(data) {
 						function(result) {
 
 						});
-				} else {
-					logger.info(`** skipping checks for methods: `);
 				}
 				callback();
 			},
 			function(callback) {
-				logger.trace(`** check sqli: `);
-				//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-				logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
-				sqli.scan(
-					data[headers.getPosition(headers.REQUEST)],
-					function(result) {
+				if (argv.all || argv.sqli) {
+					logger.trace(`** check sqli: `);
+					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
+					sqli.scan(
+						data[headers.getPosition(headers.REQUEST)],
+						function(result) {
 
-					});
+						});
+				}
 				callback();
 			},
 			function(callback) {
-				logger.trace(`** check xss: `);
-				//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-				logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
-				xss.scan(
-					data[headers.getPosition(headers.REQUEST)],
-					function(result) {
+				if (argv.all || argv.xss) {
+					logger.trace(`** check xss: `);
+					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
+					xss.scan(
+						data[headers.getPosition(headers.REQUEST)],
+						function(result) {
 
-					});
+						});
+				}
 				callback();
 			},
 			function(callback) {
-				logger.trace(`** check status codes: `);
-				//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-				logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
-				logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
-				statuscodes.scan(
-					data[headers.getPosition(headers.SOURCE)],
-					data[headers.getPosition(headers.STATUSCODE)],
-					function(result) {
+				if (argv.all || argv.statuscodes) {
+					logger.trace(`** check status codes: `);
+					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+					logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
+					logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
+					statuscodes.scan(
+						data[headers.getPosition(headers.SOURCE)],
+						data[headers.getPosition(headers.STATUSCODE)],
+						function(result) {
 
-					});
+						});
+				}
 				callback();
 			},
 			function(callback) {
-				logger.trace(`** check useragents: `);
-				//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-				logger.trace(`headers.getPosition(headers.USERAGENT) ${headers.getPosition(headers.USERAGENT)}`);
-				useragents.scan(
-					data[headers.getPosition(headers.USERAGENT)],
-					function(result) {
+				if (argv.all || argv.useragents) {
+					logger.trace(`** check useragents: `);
+					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+					logger.trace(`headers.getPosition(headers.USERAGENT) ${headers.getPosition(headers.USERAGENT)}`);
+					useragents.scan(
+						data[headers.getPosition(headers.USERAGENT)],
+						function(result) {
 
-					});
+						});
+				}
 				callback();
 			},
 			function(callback) {
-				logger.trace(`** check payloads: `);
-				//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
-				logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
-				payloads.scan(
-					data[headers.getPosition(headers.REQUEST)],
-					function(result) {
+				if (argv.all || argv.payloads) {
+					logger.trace(`** check payloads: `);
+					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
+					payloads.scan(
+						data[headers.getPosition(headers.REQUEST)],
+						function(result) {
 
-					});
+						});
+				}
 				callback();
 			},
 			function(callback) {
