@@ -47,25 +47,22 @@ sed -E 's/(\S+) (\S+) (\S+) (\[.*\]) ("[^"]*") (\S+) (\S+) ("[^"]*") ("[^"]*") (
 
 
 
-Ctrl+Shift+P or Cmd+Shift+P in Linux/Windows/OS X
+Ctrl+Shift+P
 
 type install, select Package Control: Install Package
 
 type prettify, select HTML-CSS-JS Prettify
 
 
-
 To beautify your code when saving the document, set the format_on_save setting to true in HTMLPrettify.sublime-settings:
 
-Ctrl+Shift+P or Cmd+Shift+P in Linux/Windows/OS X
+Ctrl+Shift+P
 type htmlprettify, select Set Plugin Options
 
 gedit ./.config/sublime-text-3/Packages/HTML-CSS-JS\ Prettify/.jsbeautifyrc.defaults.json 
 
+// Indentation character
+"indent_char": "\t",
 
-        // Indentation character
-        "indent_char": "\t",
-
-        // Indentation size
-        "indent_size": 1,
-
+// Indentation size
+"indent_size": 1,

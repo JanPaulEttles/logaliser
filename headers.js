@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 
 const csv = require('fast-csv');
@@ -13,8 +12,8 @@ const USERAGENT = 'useragent';
 const TIMESTAMP = 'timestamp';
 
 function complete(rowCount, callback) {
-    logger.trace(`Parsed ${rowCount} rows`);
-    callback(null, rowCount);
+  logger.trace(`Parsed ${rowCount} rows`);
+  callback(null, rowCount);
 }
 
 function process(row) {
@@ -28,9 +27,9 @@ function process(row) {
     example: {}
   };
 
-  data.position = row[0];  
+  data.position = row[0];
   data.type = row[1];
-  data.name = row[2];  
+  data.name = row[2];
   data.description = row[3];
   data.example = row[4];
 
@@ -47,10 +46,10 @@ module.exports = {
     //clear the array
     headers.length = 0;
     fs.createReadStream(file)
-        .pipe(csv.parse())
-        .on('error', error => callback(error))
-        .on('data', row => process(row))
-        .on('end', rowCount => complete(rowCount, callback));    
+      .pipe(csv.parse())
+      .on('error', error => callback(error))
+      .on('data', row => process(row))
+      .on('end', rowCount => complete(rowCount, callback));
   },
   getPosition: function(key) {
     var response = null;
@@ -67,4 +66,3 @@ module.exports = {
     return 'usage: hey there.... smileyface';
   }
 };
-

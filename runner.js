@@ -130,7 +130,7 @@ function init() {
 
 }
 
-
+/*
 function parseLog() {
 	fs.createReadStream(argv.input)
 		.pipe(csv.parse({ delimiter: '\t' }))
@@ -138,6 +138,19 @@ function parseLog() {
 		.on('data', row => process(row))
 		.on('end', rowCount => complete(rowCount));
 }
+*/
+var count = 0;
+
+function parseLog() {
+	fs.createReadStream(argv.input)
+		.pipe(csv.parse({ delimiter: '\t' }))
+		.on('error', error => logger.error(error))
+		.on('data', function(row) {
+			process(row, count++);
+		})
+		.on('end', rowCount => complete(rowCount));
+}
+
 
 function complete(rowCount) {
 
@@ -148,18 +161,21 @@ function complete(rowCount) {
 	});
 }
 
-function process(data) {
+function process(data, count) {
+	//logger.info(count);
 	async.series([
 			function(callback) {
 				if (argv.all || argv.creditcards) {
 					logger.trace(`** check for credit cards: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 
-					creditcards.scan(
+					creditcards.scanWithConfidence(
 						data[headers.getPosition(headers.REQUEST)],
-						function(result) {
-							//do something with the result
+						function(error, results) {
+							if (error) { logger.error(`** creditcards.scanWithConfidence: error >> ${error}`); return callback(error); }
+							results.forEach(function(result) {
+								logger.info(`line ${count} : ${result}`);
+							});
 						});
 				}
 				callback();
@@ -167,14 +183,13 @@ function process(data) {
 			function(callback) {
 				if (argv.all || argv.methods) {
 					logger.trace(`** check http methods: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 					logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
 
 					methods.scan(
 						data[headers.getPosition(headers.REQUEST)],
 						data[headers.getPosition(headers.STATUSCODE)],
-						function(result) {
+						function(error, results) {
 
 						});
 				}
