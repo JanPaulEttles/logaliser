@@ -77,6 +77,18 @@ const argv = yargs
 			default: false,
 			alias: 'sqli'
 		},
+		sqlideep: {
+			description: 'Deep scan for sqli in the requests',
+			boolean: true,
+			default: false,
+			alias: 'sqlideep'
+		},
+		sqlipayloads: {
+			alias: 'sqlipayloads',
+			description: "<filename> Log file name",
+			requiresArg: true,
+			required: false
+		},
 		statuscodes: {
 			description: 'Scan for statuscodes against sources',
 			boolean: true,
@@ -113,6 +125,17 @@ function init() {
 		if (!argv.sqli) {
 			logger.info(`** skipping checks for sqli: `);
 		}
+		if (!argv.sqlideep) {
+			logger.info(`** skipping deep checks for sqli: `);
+		} else {
+			logger.info(`** loading search terms for deep sqli: `);
+			sqli.load(
+				argv.sqlipayloads,
+				function(error, count) {
+					if (error) { logger.error(`** sqli.load: error >> ${error}`); }
+					logger.info(`** loaded ${count} search terms for sqli`);
+				});
+		}
 		if (!argv.statuscodes) {
 			logger.info(`** skipping checks for statuscodes: `);
 		}
@@ -130,15 +153,6 @@ function init() {
 
 }
 
-/*
-function parseLog() {
-	fs.createReadStream(argv.input)
-		.pipe(csv.parse({ delimiter: '\t' }))
-		.on('error', error => logger.error(error))
-		.on('data', row => process(row))
-		.on('end', rowCount => complete(rowCount));
-}
-*/
 var count = 0;
 
 function parseLog() {
@@ -190,7 +204,10 @@ function process(data, count) {
 						data[headers.getPosition(headers.REQUEST)],
 						data[headers.getPosition(headers.STATUSCODE)],
 						function(error, results) {
-
+							if (error) { logger.error(`** methods.scanWithConfidence: error >> ${error}`); return callback(error); }
+							results.forEach(function(result) {
+								logger.info(`line ${count} : ${result}`);
+							});
 						});
 				}
 				callback();
@@ -201,6 +218,19 @@ function process(data, count) {
 					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 					sqli.scan(
+						data[headers.getPosition(headers.REQUEST)],
+						function(result) {
+
+						});
+				}
+				callback();
+			},
+			function(callback) {
+				if (argv.all || argv.sqlideep) {
+					logger.trace(`** check sqlideep: `);
+					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
+					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
+					sqli.scanDeep(
 						data[headers.getPosition(headers.REQUEST)],
 						function(result) {
 
