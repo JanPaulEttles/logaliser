@@ -14,6 +14,7 @@ npm install yargs
 
 npm install async
 
+npm install readline
 
 git add .
 
@@ -29,6 +30,11 @@ node runner.js --creditcards --sqli --xss --methods --payloads -i test.log -c te
 node runner.js --no-creditcards --no-sqli --no-xss --no-methods --no-payloads -i test.log -c test.headers
 
 node runner.js --cards --xss --sqli --methods --statuscodes --useragents --payloads -i test.log -c test.headers 
+
+node runner.js --sqlideep -sqlipayloads sqlipayloads.txt -i test.log -c test.headers
+
+use default payloads
+node runner.js --sqlideep -i test.log -c test.headers
 
 node runner.js --all -i test.log -c test.headers 
 
