@@ -1,3 +1,4 @@
+11.11.11.11	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=<BGSOUND SRC="javascript:alert('XSS');"> HTTP/1.1"	200	65433	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
 64.242.88.10	-	-	[07/Mar/2004:16:05:45 -0800]	"GET /somethingnonexistent HTTP/1.1"	404	1230	"curl/7.26.0"
 64.242.88.10	-	-	[07/Mar/2004:16:05:46 -0800]	"GET /somethingnonexistent HTTP/1.1"	404	23140	"curl/7.15.5"
 64.242.88.10	-	-	[07/Mar/2004:16:05:47 -0800]	"GET /somethingnonexistent HTTP/1.1"	404	2340	"curl/7.11.0"
@@ -25,3 +26,6 @@
 11.11.11.11	-	-	[07/Mar/2004:16:05:49 -0800]	"UNLINK / HTTP/1.1"	200	65433	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
 64.242.88.10	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?parameter=<script>alert(1)</script> HTTP/1.1"	200	345	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
 64.242.88.10	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /shodan.blah HTTP/1.1"	200	345	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
+13.13.13.13	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=<script>var a = "</script> <script> alert('XSS !'); </script> <script>";</script> HTTP/1.1"	200	65433	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
+14.14.14.14	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=%3Cscript%3Evar+a+%3D+%22%3C%2Fscript%3E+%3Cscript%3E+alert%28%27XSS+%21%27%29%3B+%3C%2Fscript%3E+%3Cscript%3E%22%3B%3C%2Fscript%3E HTTP/1.1"	200	65433	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
+12.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=%3CBGSOUND%20SRC%3D%22javascript%3Aalert%28%27XSS%27%29%3B%22%3E HTTP/1.1"	200	65433	"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"

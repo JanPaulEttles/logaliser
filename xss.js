@@ -16,7 +16,34 @@ const words = [
   { description: 'basic xss', payload: 'confirm' },
 ];
 
+var readline = require('readline');
+
+var payloads = [];
+var count = 0;
+
 module.exports = {
+  load: function(file, callback) {
+
+    logger.trace(file);
+
+    if (file === undefined) {
+      file = 'xss_payloads_rf_v0.1.txt';
+      //file = 'test_xss_payloads.txt';
+    }
+    var lineReader = readline.createInterface({
+      input: fs.createReadStream(file)
+    });
+
+    lineReader.on('line', function(line) {
+      logger.trace(line);
+      count++;
+      payloads.push(line);
+    });
+    lineReader.on('close', function(line) {
+      logger.trace('done reading the file...');
+      callback(null, count);
+    });
+  },
   scan: function(input, callback) {
 
     logger.trace(input);
@@ -32,7 +59,51 @@ module.exports = {
 
     callback();
   },
+  scanDeep: function(input, callback) {
+
+    try {
+
+      logger.trace(input);
+      var results = [];
+
+      //escape() will not encode: @*/+
+      //encodeURI() will not encode: ~!@#$&*()=:/,;?+'
+      //encodeURIComponent() will not encode: ~!*()'
+      //https://stackoverflow.com/questions/75980/when-are-you-supposed-to-use-escape-instead-of-encodeuri-encodeuricomponent
+      //TODO fix the escape, use encodeURIComponent then reaplce ()' with ' = %27  ( = %28 and ) = %29
+
+
+      payloads.forEach(function(payload) {
+        //logger.info(input);
+        //logger.info(payload);
+        //logger.info(encodeURIComponent(payload));
+        //logger.info(escape(payload));
+        //logger.info(fixedEncodeURIComponent(payload));
+
+        if (input.includes(payload)) {
+          //logger.info(`it could be xss : ${payload}`);
+          results.push(`it could be xss : ${payload}`);
+        }
+        if (input.includes(fixedEncodeURIComponent(payload))) {
+          //logger.info(`it could be xss : ${payload}`);
+          results.push(`it could be xss : ${fixedEncodeURIComponent(payload)} URI encoded`);
+        }
+      });
+    } catch (error) {
+      logger.error(error);
+      callback(error);
+    }
+
+    callback(null, results);
+  },
+
   help: function() {
     return 'usage: hey there.... smileyface';
   }
 };
+
+const fixedEncodeURIComponent = (str) => {
+  return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+    return '%' + c.charCodeAt(0).toString(16)
+  })
+}

