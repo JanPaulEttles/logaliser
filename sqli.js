@@ -18,13 +18,13 @@ const words = [
 var readline = require('readline');
 
 var payloads = [];
-var count = 0;
 
 module.exports = {
   load: function(file, callback) {
 
     logger.trace(file);
 
+    var count = 0;
     if (file === undefined) {
       file = 'sqli_payloads_rf_v0.1.txt';
     }
@@ -62,13 +62,16 @@ module.exports = {
     try {
 
       logger.trace(input);
+      var results = [];
 
       payloads.forEach(function(payload) {
         if (input.includes(payload)) {
-          logger.info(`it could be sqli : ${payload}`);
+          //logger.info(`it could be sqli : ${payload}`);
+          results.push(`it could be sqli : ${payload}`);
         }
-        if (input.includes(encodeURIComponent(payload))) {
-          logger.info(`it could be sqli : ${payload}`);
+        if (input.includes(fixedEncodeURIComponent(payload))) {
+          //logger.info(`it could be sqli : ${payload}`);
+          results.push(`it could be sqli : ${fixedEncodeURIComponent(payload)} URI encoded`);
         }
       });
     } catch (error) {
@@ -76,9 +79,15 @@ module.exports = {
       callback(error);
     }
 
-    callback();
+    callback(null, results);
   },
   help: function() {
     return 'usage: hey there.... smileyface';
   }
 };
+
+const fixedEncodeURIComponent = (str) => {
+  return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+    return '%' + c.charCodeAt(0).toString(16)
+  })
+}

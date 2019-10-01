@@ -169,22 +169,23 @@ function init() {
 			logger.info(`** skipping checks for dodgy payloads: `);
 		}
 	}
-	headers.load(argv.config, function(err, result) {
-		if (err) { logger.error(`** request.get: error >> ${err}`); }
+	headers.load(argv.config, function(error, result) {
+		if (error) { logger.error(`** request.get: error >> ${error}`); }
 		parseLog();
 	});
 
 }
 
-var linenumber = 1;
+
 
 function parseLog() {
+	var linenumber = 1;
 	try {
 		fs.createReadStream(argv.input)
 			.pipe(csv.parse({ quote: null, delimiter: '\t' }))
-			.on('error', error => logger.error("createReadStream: " + error))
+			.on('error', error => logger.error(error))
 			.on('data', function(row) {
-				process(row, linenumber++);
+				process(linenumber++, row);
 			})
 			.on('end', rowCount => complete(rowCount));
 	} catch (error) {
@@ -203,8 +204,7 @@ function complete(rowCount) {
 
 }
 
-function process(data, count) {
-	//logger.info(count);
+function process(linenumber, data) {
 	async.series([
 			function(callback) {
 				if (argv.all || argv.creditcards) {
@@ -216,7 +216,7 @@ function process(data, count) {
 						function(error, results) {
 							if (error) { logger.error(`** creditcards.scanWithConfidence: error >> ${error}`); return callback(error); }
 							results.forEach(function(result) {
-								logger.info(`line ${count} : ${result}`);
+								logger.info(`line ${linenumber} : ${result}`);
 							});
 						});
 				}
@@ -234,7 +234,7 @@ function process(data, count) {
 						function(error, results) {
 							if (error) { logger.error(`** methods.scanWithConfidence: error >> ${error}`); return callback(error); }
 							results.forEach(function(result) {
-								logger.info(`line ${count} : ${result}`);
+								logger.info(`line ${linenumber} : ${result}`);
 							});
 						});
 				}
@@ -243,12 +243,11 @@ function process(data, count) {
 			function(callback) {
 				if (argv.all || argv.sqli) {
 					logger.trace(`** check sqli: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 					sqli.scan(
 						data[headers.getPosition(headers.REQUEST)],
-						function(result) {
-
+						function(error, results) {
+							if (error) { logger.error(`** sqli.scan: error >> ${error}`); return callback(error); }
 						});
 				}
 				callback();
@@ -256,12 +255,14 @@ function process(data, count) {
 			function(callback) {
 				if (argv.all || argv.sqlideep) {
 					logger.trace(`** check sqlideep: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 					sqli.scanDeep(
 						data[headers.getPosition(headers.REQUEST)],
-						function(result) {
-
+						function(error, results) {
+							if (error) { logger.error(`** sqli.scanDeep: error >> ${error}`); return callback(error); }
+							results.forEach(function(result) {
+								logger.info(`line ${linenumber} : ${result}`);
+							});
 						});
 				}
 				callback();
@@ -275,7 +276,7 @@ function process(data, count) {
 						function(error, results) {
 							if (error) { logger.error(`** xss.scanDeep: error >> ${error}`); return callback(error); }
 							results.forEach(function(result) {
-								logger.info(`line ${count} : ${result}`);
+								logger.info(`line ${linenumber} : ${result}`);
 							});
 						});
 				}
@@ -284,12 +285,11 @@ function process(data, count) {
 			function(callback) {
 				if (argv.all || argv.xss) {
 					logger.trace(`** check xss: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 					xss.scan(
 						data[headers.getPosition(headers.REQUEST)],
-						function(result) {
-
+						function(error, results) {
+							if (error) { logger.error(`** xss.scan: error >> ${error}`); return callback(error); }
 						});
 				}
 				callback();
@@ -297,14 +297,13 @@ function process(data, count) {
 			function(callback) {
 				if (argv.all || argv.statuscodes) {
 					logger.trace(`** check status codes: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
 					logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
 					statuscodes.scan(
 						data[headers.getPosition(headers.SOURCE)],
 						data[headers.getPosition(headers.STATUSCODE)],
-						function(result) {
-
+						function(error, results) {
+							if (error) { logger.error(`** statuscodes.scan: error >> ${error}`); return callback(error); }
 						});
 				}
 				callback();
@@ -312,12 +311,11 @@ function process(data, count) {
 			function(callback) {
 				if (argv.all || argv.useragents) {
 					logger.trace(`** check useragents: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.USERAGENT) ${headers.getPosition(headers.USERAGENT)}`);
 					useragents.scan(
 						data[headers.getPosition(headers.USERAGENT)],
-						function(result) {
-
+						function(error, results) {
+							if (error) { logger.error(`** useragents.scan: error >> ${error}`); return callback(error); }
 						});
 				}
 				callback();
@@ -325,12 +323,11 @@ function process(data, count) {
 			function(callback) {
 				if (argv.all || argv.payloads) {
 					logger.trace(`** check payloads: `);
-					//if (err) { logger.error(`** request.get: error >> ${err}); return callback(err); }
 					logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 					payloads.scan(
 						data[headers.getPosition(headers.REQUEST)],
-						function(result) {
-
+						function(error, results) {
+							if (error) { logger.error(`** payloads.scan: error >> ${error}`); return callback(error); }
 						});
 				}
 				callback();

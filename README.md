@@ -25,6 +25,13 @@ git commit -a
 git push origin master
 
 
+git diff
+
+git reset --hard
+
+git pull
+
+
 
 node runner.js --creditcards --sqli --xss --methods --payloads -i test.log -c test.headers
 node runner.js --no-creditcards --no-sqli --no-xss --no-methods --no-payloads -i test.log -c test.headers

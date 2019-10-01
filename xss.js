@@ -19,10 +19,11 @@ const words = [
 var readline = require('readline');
 
 var payloads = [];
-var count = 0;
 
 module.exports = {
   load: function(file, callback) {
+
+    var count = 0;
 
     logger.trace(file);
 
@@ -69,8 +70,6 @@ module.exports = {
       //escape() will not encode: @*/+
       //encodeURI() will not encode: ~!@#$&*()=:/,;?+'
       //encodeURIComponent() will not encode: ~!*()'
-      //https://stackoverflow.com/questions/75980/when-are-you-supposed-to-use-escape-instead-of-encodeuri-encodeuricomponent
-      //TODO fix the escape, use encodeURIComponent then reaplce ()' with ' = %27  ( = %28 and ) = %29
 
 
       payloads.forEach(function(payload) {
