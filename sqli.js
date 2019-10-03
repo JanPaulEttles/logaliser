@@ -43,19 +43,25 @@ module.exports = {
     });
   },
   scan: function(input, callback) {
+    try {
+      logger.trace(input);
+      var results = [];
+      words.forEach(function(word) {
+        var regex = new RegExp(word.payload, 'i');
 
-    logger.trace(input);
+        if (regex.test(input.toUpperCase())) {
+          //logger.info(`it could be ${word.description}: ${word.payload}`);
+          results.push(`it could be ${word.description}: ${word.payload}`);
+        }
 
-    words.forEach(function(word) {
-      var regex = new RegExp(word.payload, 'i');
+      });
 
-      if (regex.test(input.toUpperCase())) {
-        logger.info(`it could be ${word.description}: ${word.payload}`);
-      }
+    } catch (error) {
+      logger.error(error);
+      callback(error);
+    }
 
-    });
-
-    callback();
+    callback(null, results);
   },
   scanDeep: function(input, callback) {
 

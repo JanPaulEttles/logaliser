@@ -51,6 +51,11 @@ module.exports = {
       .on('data', row => process(row))
       .on('end', rowCount => complete(rowCount, callback));
   },
+  getHeaderSize: function() {
+    //clear the array
+    return headers.length;
+
+  },
   getPosition: function(key) {
     var response = null;
 

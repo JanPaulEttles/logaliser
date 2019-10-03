@@ -47,18 +47,26 @@ module.exports = {
   },
   scan: function(input, callback) {
 
-    logger.trace(input);
+    try {
 
-    words.forEach(function(word) {
-      var regex = new RegExp(word.payload, 'i');
+      logger.trace(input);
+      var results = [];
+      words.forEach(function(word) {
+        var regex = new RegExp(word.payload, 'i');
 
-      if (regex.test(input.toUpperCase())) {
-        logger.info(`it could be ${word.description}: ${word.payload}`);
-      }
+        if (regex.test(input.toUpperCase())) {
+          //logger.info(`it could be ${word.description}: ${word.payload}`);
+          results.push(`it could be ${word.description}: ${word.payload}`);
+        }
 
-    });
+      });
 
-    callback();
+    } catch (error) {
+      logger.error(error);
+      callback(error);
+    }
+
+    callback(null, results);
   },
   scanDeep: function(input, callback) {
 
