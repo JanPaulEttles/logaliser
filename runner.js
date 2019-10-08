@@ -206,7 +206,7 @@ function complete(rowCount) {
 
 function process(linenumber, data) {
 	if (data.length !== headers.getHeaderSize()) {
-		logger.warn(`data.length ${data.length} but headers.getHeaderSize is ${headers.getHeaderSize()}`);
+		logger.warn(`line ${linenumber} : data.length ${data.length} but headers.getHeaderSize is ${headers.getHeaderSize()}`);
 	} else {
 		async.series([
 				function(callback) {

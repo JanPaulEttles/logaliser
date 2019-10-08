@@ -6,11 +6,11 @@ const logger = require('./logger.js');
 //https://github.com/pgaijin66/XSS-Payloads/blob/master/payload.txt
 //pull some stuff in from here
 const words = [
-  { description: 'basic xss', payload: 'script' },
-  { description: 'basic xss', payload: 'javascript' },
+  { description: 'basic xss', payload: '<script' },
+  { description: 'basic xss', payload: 'javascript[:"]' },
   { description: 'basic xss', payload: 'svg' },
   { description: 'basic xss', payload: 'alert' },
-  { description: 'basic xss', payload: 'onmouseover' },
+  { description: 'basic xss', payload: 'onmouseover[ =>]' },
   { description: 'basic xss', payload: 'iframe' },
   { description: 'basic xss', payload: 'prompt' },
   { description: 'basic xss', payload: 'confirm' },
@@ -58,7 +58,36 @@ module.exports = {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload}`);
         }
+        if (regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
+          //logger.info(`it could be ${word.description}: ${word.payload}`);
+          results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
+        }
+      });
 
+    } catch (error) {
+      logger.error(error);
+      callback(error);
+    }
+
+    callback(null, results);
+  },
+  scanWithStatus: function(querystring, statuscode, callback) {
+
+    try {
+
+      logger.trace(input);
+      var results = [];
+      words.forEach(function(word) {
+        var regex = new RegExp(word.payload, 'i');
+
+        if (regex.test(input.toUpperCase())) {
+          //logger.info(`it could be ${word.description}: ${word.payload}`);
+          results.push(`it could be ${word.description}: ${word.payload}`);
+        }
+        if (regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
+          //logger.info(`it could be ${word.description}: ${word.payload}`);
+          results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
+        }
       });
 
     } catch (error) {
