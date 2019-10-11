@@ -1,34 +1,24 @@
+https://guides.github.com/features/mastering-markdown/
 
 
+# Project Set up
 
-git clone https://github.com/janpaulettles/logaliser.git
-
-cd logaliser
-
-npm init --yes
-
-npm install fast-csv
-
-npm install yargs
-
-npm install async
-
-npm install readline
-
-git add .
-
-git commit -m "initial"
-
-git commit -a
-
-git push origin master
+* git clone https://github.com/janpaulettles/logaliser.git
+* cd logaliser
+* npm init --yes
+* npm install fast-csv
+* npm install yargs
+* npm install async
+* npm install readline
+* git add .
+* git commit -m "initial"
+* git commit -a
+* git push origin master
 
 
-git diff
-
-git reset --hard
-
-git pull
+* git diff
+* git reset --hard
+* git pull
 
 
 
