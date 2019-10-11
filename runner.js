@@ -7,6 +7,7 @@ const async = require('async');
 const logger = require('./logger.js');
 const headers = require('./headers.js');
 
+const aggressors = require('./aggressors.js');
 const creditcards = require('./creditcards.js');
 const methods = require('./methods.js');
 const sqli = require('./sqli.js');
@@ -53,9 +54,20 @@ const argv = yargs
 			default: false,
 			alias: 'all'
 		},
+		aggressors: {
+			description: 'Display the top n number of sources',
+			default: 10,
+			alias: 'a'
+		},
+		//		precheck: {
+		//			description: 'Max number of lines to display where the line does not meet the number of headers',
+		//			default: 10,
+		//			alias: 'pc'
+		//		},
 		precheck: {
 			description: 'Max number of lines to display where the line does not meet the number of headers',
-			default: 10,
+			boolean: true,
+			default: false,
 			alias: 'pc'
 		},
 		creditcards: {
@@ -129,58 +141,61 @@ const argv = yargs
 init();
 
 function init() {
-	if (argv.precheck) {
+	if(argv.precheck) {
 		logger.info(`** running a precheck on the input **`);
 
 	} else {
-		if (!argv.all) {
-			if (!argv.creditcards) {
+		if(!argv.all) {
+			if(!argv.aggressors) {
+				logger.info(`** skipping checks for aggressors: `);
+			}
+			if(!argv.creditcards) {
 				logger.info(`** skipping checks for credit cards: `);
 			}
-			if (!argv.methods) {
+			if(!argv.methods) {
 				logger.info(`** skipping checks for dodgy methods: `);
 			}
-			if (!argv.xss) {
+			if(!argv.xss) {
 				logger.info(`** skipping checks for xss: `);
 			}
-			if (!argv.xssdeep) {
+			if(!argv.xssdeep) {
 				logger.info(`** skipping deep checks for xss: `);
 			} else {
 				logger.info(`** loading search terms for deep xss: `);
 				xss.load(
 					argv.xsspayloads,
 					function(error, count) {
-						if (error) { logger.error(`** xss.load: error >> ${error}`); }
+						if(error) { logger.error(`** xss.load: error >> ${error}`); }
 						logger.info(`** loaded ${count} search terms for xss`);
 					});
 			}
-			if (!argv.sqli) {
+			if(!argv.sqli) {
 				logger.info(`** skipping checks for sqli: `);
 			}
-			if (!argv.sqlideep) {
+			if(!argv.sqlideep) {
 				logger.info(`** skipping deep checks for sqli: `);
 			} else {
 				logger.info(`** loading search terms for deep sqli: `);
 				sqli.load(
 					argv.sqlipayloads,
 					function(error, count) {
-						if (error) { logger.error(`** sqli.load: error >> ${error}`); }
+						if(error) { logger.error(`** sqli.load: error >> ${error}`); }
 						logger.info(`** loaded ${count} search terms for sqli`);
 					});
 			}
-			if (!argv.statuscodes) {
+			if(!argv.statuscodes) {
 				logger.info(`** skipping checks for statuscodes: `);
 			}
-			if (!argv.useragents) {
+			if(!argv.useragents) {
 				logger.info(`** skipping checks for useragents: `);
 			}
-			if (!argv.payloads) {
+			if(!argv.payloads) {
 				logger.info(`** skipping checks for dodgy payloads: `);
 			}
 		}
 	}
 	headers.load(argv.config, function(error, result) {
-		if (error) { logger.error(`** request.get: error >> ${error}`); }
+		if(error) { logger.error(`** request.get: error >> ${error}`); }
 		parseLog();
 	});
 
@@ -206,41 +221,49 @@ function parseLog() {
 
 function complete(rowCount) {
 
-	logger.trace(`Parsed ${rowCount} rows`)
+	logger.trace(`Parsed ${rowCount} rows`);
 
-	statuscodes.results(function(result) {
+	if(argv.aggressors) {
+		logger.trace(`Display top ${argv.aggressors} aggressors`);
+		aggressors.topAggressors(argv.aggressors, function(result) {
 
-	});
+		});
+	}
 
+	/*
+		statuscodes.results(function(result) {
+
+		});
+	*/
 }
 
 var precheckcount = 0;
 
 function process(linenumber, data) {
 
-	if (argv.precheck) {
-		if (data.length !== headers.getHeaderSize()) {
+	if(argv.precheck) {
+		if(data.length !== headers.getHeaderSize()) {
 			precheckcount++;
 			logger.warn(`line ${linenumber} : data.size ${data.length} but headers.size is ${headers.getHeaderSize()} : ${data}`);
 		}
-		if (precheckcount >= 10) {
+		if(precheckcount >= 10) {
 			process.exit(0);
 		}
 	} else {
 
-		if (data.length !== headers.getHeaderSize()) {
+		if(data.length !== headers.getHeaderSize()) {
 			logger.warn(`line ${linenumber} : data.length ${data.length} but headers.getHeaderSize is ${headers.getHeaderSize()}`);
 		} else {
 			async.series([
 					function(callback) {
-						if (argv.all || argv.creditcards) {
+						if(argv.all || argv.creditcards) {
 							logger.trace(`** check for credit cards: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 
 							creditcards.scanWithConfidence(
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
-									if (error) { logger.error(`** creditcards.scanWithConfidence: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** creditcards.scanWithConfidence: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});
@@ -249,7 +272,7 @@ function process(linenumber, data) {
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.methods) {
+						if(argv.all || argv.methods) {
 							logger.trace(`** check http methods: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
@@ -258,7 +281,7 @@ function process(linenumber, data) {
 								data[headers.getPosition(headers.REQUEST)],
 								data[headers.getPosition(headers.STATUSCODE)],
 								function(error, results) {
-									if (error) { logger.error(`** methods.scanWithConfidence: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** methods.scanWithConfidence: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});
@@ -267,13 +290,13 @@ function process(linenumber, data) {
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.sqli) {
+						if(argv.all || argv.sqli) {
 							logger.trace(`** check sqli: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							sqli.scan(
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
-									if (error) { logger.error(`** sqli.scan: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** sqli.scan: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});
@@ -282,13 +305,13 @@ function process(linenumber, data) {
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.sqlideep) {
+						if(argv.all || argv.sqlideep) {
 							logger.trace(`** check sqlideep: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							sqli.scanDeep(
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
-									if (error) { logger.error(`** sqli.scanDeep: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** sqli.scanDeep: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});
@@ -297,13 +320,13 @@ function process(linenumber, data) {
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.xssdeep) {
+						if(argv.all || argv.xssdeep) {
 							logger.trace(`** check xssdeep: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							xss.scanDeep(
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
-									if (error) { logger.error(`** xss.scanDeep: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** xss.scanDeep: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});
@@ -312,13 +335,13 @@ function process(linenumber, data) {
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.xss) {
+						if(argv.all || argv.xss) {
 							logger.trace(`** check xss: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							xss.scan(
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
-									if (error) { logger.error(`** xss.scan: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** xss.scan: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});
@@ -327,7 +350,7 @@ function process(linenumber, data) {
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.statuscodes) {
+						if(argv.all || argv.statuscodes) {
 							logger.trace(`** check status codes: `);
 							logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
 							logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
@@ -335,31 +358,43 @@ function process(linenumber, data) {
 								data[headers.getPosition(headers.SOURCE)],
 								data[headers.getPosition(headers.STATUSCODE)],
 								function(error, results) {
-									if (error) { logger.error(`** statuscodes.scan: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** statuscodes.scan: error >> ${error}`); return callback(error); }
 								});
 						}
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.useragents) {
+						if(argv.all || argv.aggressors) {
+							logger.trace(`** check aggressors: `);
+							logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
+							aggressors.scan(
+								data[headers.getPosition(headers.SOURCE)],
+								function(error, results) {
+									if(error) { logger.error(`** aggressors.scan: error >> ${error}`); return callback(error); }
+								});
+						}
+						callback();
+					},
+					function(callback) {
+						if(argv.all || argv.useragents) {
 							logger.trace(`** check useragents: `);
 							logger.trace(`headers.getPosition(headers.USERAGENT) ${headers.getPosition(headers.USERAGENT)}`);
 							useragents.scan(
 								data[headers.getPosition(headers.USERAGENT)],
 								function(error, results) {
-									if (error) { logger.error(`** useragents.scan: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** useragents.scan: error >> ${error}`); return callback(error); }
 								});
 						}
 						callback();
 					},
 					function(callback) {
-						if (argv.all || argv.payloads) {
+						if(argv.all || argv.payloads) {
 							logger.trace(`** check payloads: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							payloads.scan(
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
-									if (error) { logger.error(`** payloads.scan: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** payloads.scan: error >> ${error}`); return callback(error); }
 								});
 						}
 						callback();
