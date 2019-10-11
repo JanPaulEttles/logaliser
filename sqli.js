@@ -55,7 +55,7 @@ module.exports = {
         }
         if (regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
-          results.push(`it could be ${word.description}: ${word.payload}`);
+          results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
         }
       });
 
