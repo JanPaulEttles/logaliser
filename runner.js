@@ -55,20 +55,26 @@ const argv = yargs
 			alias: 'all'
 		},
 		aggressors: {
-			description: 'Display the top n number of sources',
-			default: 10,
+			description: 'Run a precheck on the data and display where the line does not meet the number of headers',
+			boolean: true,
+			default: false,
 			alias: 'a'
 		},
-		//		precheck: {
-		//			description: 'Max number of lines to display where the line does not meet the number of headers',
-		//			default: 10,
-		//			alias: 'pc'
-		//		},
+		aggressors_display: {
+			description: 'Max number of sources to display',
+			default: 10,
+			alias: 'ad'
+		},
 		precheck: {
-			description: 'Max number of lines to display where the line does not meet the number of headers',
+			description: 'Run a precheck on the data and display where the line does not meet the number of headers',
 			boolean: true,
 			default: false,
 			alias: 'pc'
+		},
+		precheck_display: {
+			description: 'Max number of lines to display',
+			default: 10,
+			alias: 'pcd'
 		},
 		creditcards: {
 			description: 'Scan for creditcards in the requests',
@@ -246,7 +252,7 @@ function process(linenumber, data) {
 			precheckcount++;
 			logger.warn(`line ${linenumber} : data.size ${data.length} but headers.size is ${headers.getHeaderSize()} : ${data}`);
 		}
-		if(precheckcount >= 10) {
+		if(precheckcount >= argv.precheck_display) {
 			process.exit(0);
 		}
 	} else {
