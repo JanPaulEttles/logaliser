@@ -43,42 +43,45 @@ https://guides.github.com/features/mastering-markdown/
 * node runner.js -i test.log -c test.headers --a --ad 10
 * node runner.js -i test.log -c test.headers --aggressors --aggressors_display 10
 
-
-Convert the spaces in the weblog files to tabs
-
-
-sed -E 's/(\S+) (\S+) (\S+) (\[.*\]) ("[^"]*") (\S+) (\S+) ("[^"]*") ("[^"]*") (\S+) (\S+)/1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11/gm
+## Convert the spaces in the weblog files to tabs
 
 
-
-/(\S+) (\S+) (\S+) (\[.*\]) ("[^"]*") (\S+) (\S+) (\S+) ("[^"]*") (\S+) (\S+)/$1\t$2\t$3\t$4\t$5\t$6\t$7\t$8\t$9\t$10\t$11/gm
-
-
+* sed -E 's/(\S+) (\S+) (\S+) (\[.*\]) ("[^"]*") (\S+) (\S+) ("[^"]*") ("[^"]*") (\S+) (\S+)/1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11/gm
+* /(\S+) (\S+) (\S+) (\[.*\]) ("[^"]*") (\S+) (\S+) (\S+) ("[^"]*") (\S+) (\S+)/$1\t$2\t$3\t$4\t$5\t$6\t$7\t$8\t$9\t$10\t$11/gm
 
 
+## Useful stuff
 
+### Count the lines in the file
+* wc -l test.log
 
-
+### Display a range of line - that may be misformatted
+* sed -n '100,100p' test.log
 
 
 
 
-Ctrl+Shift+P
-
-type install, select Package Control: Install Package
-
-type prettify, select HTML-CSS-JS Prettify
 
 
-To beautify your code when saving the document, set the format_on_save setting to true in HTMLPrettify.sublime-settings:
 
-Ctrl+Shift+P
-type htmlprettify, select Set Plugin Options
 
-gedit ./.config/sublime-text-3/Packages/HTML-CSS-JS\ Prettify/.jsbeautifyrc.defaults.json 
 
-// Indentation character
-"indent_char": "\t",
+## Sublimne changes
 
-// Indentation size
-"indent_size": 1,
+
+### Prettify js
+* Ctrl+Shift+P
+* type install, select Package Control: Install Package
+* type prettify, select HTML-CSS-JS Prettify
+
+### To beautify your code when saving the document, set the format_on_save setting to true in HTMLPrettify.sublime-settings:
+* Ctrl+Shift+P
+* type htmlprettify, select Set Plugin Options
+
+* gedit ./.config/sublime-text-3/Packages/HTML-CSS-JS\ Prettify/.jsbeautifyrc.defaults.json 
+
+* // Indentation character
+* "indent_char": "\t",
+
+* // Indentation size
+* "indent_size": 1,
