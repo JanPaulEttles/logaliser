@@ -55,7 +55,7 @@ const argv = yargs
 			alias: 'all'
 		},
 		aggressors: {
-			description: 'Run a precheck on the data and display where the line does not meet the number of headers',
+			description: 'Ananlyse the most agressive hosts',
 			boolean: true,
 			default: false,
 			alias: 'a'
@@ -230,9 +230,18 @@ function complete(rowCount) {
 	logger.trace(`Parsed ${rowCount} rows`);
 
 	if(argv.aggressors) {
-		logger.trace(`Display top ${argv.aggressors} aggressors`);
-		aggressors.topAggressors(argv.aggressors, function(result) {
+		logger.trace(`Display top ${argv.aggressors_display} aggressors`);
+		aggressors.topAggressors(argv.aggressors_display, function(result) {
 
+		});
+		logger.trace(`Display top aggressors as json`);
+		aggressors.aggressorsAsJSON(function(result) {
+			let data = JSON.stringify(result, null, 2);
+
+			fs.writeFile('aggressors.json', data, (err) => {
+				if(err) throw err;
+				console.log('Data written to file');
+			});
 		});
 	}
 

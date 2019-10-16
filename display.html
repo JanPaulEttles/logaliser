@@ -1,0 +1,61 @@
+<head>
+	<title>logaliser</title>
+	<link rel='stylesheet' href='basic.css'>
+	<link rel='stylesheet' href='tabs.css'>
+	<script type="text/javascript" src="jsontable.js"></script>
+	<script type="text/javascript" src="tabs.js"></script>
+</head>
+
+<body>
+	<h1>logaliser</h1>
+	<button class="tablink" onclick="openPage('Home', this, '#AAA')">Home</button>
+	<button class="tablink" onclick="openPage('Aggressors', this, '#AAA')" id="defaultOpen">Aggressors</button>
+	<button class="tablink" onclick="openPage('XSS', this, '#AAA')">XSS</button>
+	<button class="tablink" onclick="openPage('SQLi', this, '#AAA')">SQLi</button>
+	<button class="tablink" onclick="openPage('Contact', this, '#AAA')">Contact</button>
+	<button class="tablink" onclick="openPage('About', this, '#AAA')">About</button>
+	<div id="Home" class="tabcontent">
+		<h3>Home</h3>
+		<p>Home is where the heart is..</p>
+	</div>
+	<div id="Aggressors" class="tabcontent">
+		<h3>Aggressors</h3>
+		<p>
+			<form>
+				<input type="file" id="fileAggressors">
+				<input type="input" id="aggressorsCount">
+				<button name=aggressors type=button>Refresh Accessors</button>
+				<button name=clear type=button>Clear</button>
+				<p>
+					<output name=out></output>
+				</p>
+			</form>
+		</p>
+	</div>
+	<div id="Contact" class="tabcontent">
+		<p>
+			<h3>Contact</h3>
+			<p>Get in touch, or swing by for a cup of coffee.</p>
+		</p>
+	</div>
+	<div id="XSS" class="tabcontent">
+		<p>
+			<h3>XSS</h3>
+			<p>Get in touch, or swing by for a cup of coffee.</p>
+		</p>
+	</div>
+	<div id="SQLi" class="tabcontent">
+		<p>
+			<h3>SQLi</h3>
+			<p>Get in touch, or swing by for a cup of coffee.</p>
+		</p>
+	</div>
+	<div id="About" class="tabcontent">
+		<p>
+			<h3>About</h3>
+			<p>Get in touch, or swing by for a cup of coffee.</p>
+		</p>
+	</div>
+</body>
+
+</html>

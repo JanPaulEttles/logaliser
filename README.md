@@ -68,7 +68,6 @@ https://guides.github.com/features/mastering-markdown/
 
 ## Sublimne changes
 
-
 ### Prettify js
 * Ctrl+Shift+P
 * type install, select Package Control: Install Package
@@ -77,11 +76,8 @@ https://guides.github.com/features/mastering-markdown/
 ### To beautify your code when saving the document, set the format_on_save setting to true in HTMLPrettify.sublime-settings:
 * Ctrl+Shift+P
 * type htmlprettify, select Set Plugin Options
-
 * gedit ./.config/sublime-text-3/Packages/HTML-CSS-JS\ Prettify/.jsbeautifyrc.defaults.json 
-
 * // Indentation character
 * "indent_char": "\t",
-
 * // Indentation size
 * "indent_size": 1,

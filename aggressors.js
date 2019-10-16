@@ -34,21 +34,33 @@ module.exports = {
         for(const [key, value] of mapAsc.entries()) {
             counter++;
             logger.info(`${key} \t ${value}`);
-            if(counter > count) {
+            if(counter >= count) {
                 break;
             }
-
         }
-        /*
-                mapAsc.forEach(function(value, key) {
-                    counter++;
-                    logger.info(`${key} \t ${value}`);
-                    if(counter > count) {
-                        break;
-                    }
-                });
-        */
         callback();
+    },
+    aggressorsAsJSON: function(callback) {
+
+        var results = [];
+
+        let mapAsc = new Map([...map].sort(([k, v], [k2, v2]) => {
+            if(v < v2) { return 1; }
+            if(v > v2) { return -1; }
+            return 0;
+        }));
+
+        mapAsc.forEach(function(value, key) {
+            var json = {
+                source: {},
+                count: {}
+            };
+
+            json.source = key;
+            json.count = value;
+            results.push(json);
+        });
+        callback(results);
     },
     scanWithStatus: function(source, status, callback) {
 
