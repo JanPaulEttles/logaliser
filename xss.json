@@ -17,106 +17,6 @@
     ]
   },
   {
-    "linenumber": 2,
-    "findings": []
-  },
-  {
-    "linenumber": 3,
-    "findings": []
-  },
-  {
-    "linenumber": 4,
-    "findings": []
-  },
-  {
-    "linenumber": 5,
-    "findings": []
-  },
-  {
-    "linenumber": 6,
-    "findings": []
-  },
-  {
-    "linenumber": 7,
-    "findings": []
-  },
-  {
-    "linenumber": 8,
-    "findings": []
-  },
-  {
-    "linenumber": 9,
-    "findings": []
-  },
-  {
-    "linenumber": 10,
-    "findings": []
-  },
-  {
-    "linenumber": 11,
-    "findings": []
-  },
-  {
-    "linenumber": 12,
-    "findings": []
-  },
-  {
-    "linenumber": 13,
-    "findings": []
-  },
-  {
-    "linenumber": 14,
-    "findings": []
-  },
-  {
-    "linenumber": 15,
-    "findings": []
-  },
-  {
-    "linenumber": 16,
-    "findings": []
-  },
-  {
-    "linenumber": 17,
-    "findings": []
-  },
-  {
-    "linenumber": 18,
-    "findings": []
-  },
-  {
-    "linenumber": 19,
-    "findings": []
-  },
-  {
-    "linenumber": 20,
-    "findings": []
-  },
-  {
-    "linenumber": 21,
-    "findings": []
-  },
-  {
-    "linenumber": 22,
-    "findings": []
-  },
-  {
-    "linenumber": 23,
-    "findings": []
-  },
-  {
-    "linenumber": 24,
-    "findings": []
-  },
-  {
-    "linenumber": 25,
-    "findings": []
-  },
-  {
-    "linenumber": 26,
-    "findings": []
-  },
-  {
     "linenumber": 27,
     "findings": [
       {
@@ -132,10 +32,6 @@
         "input": "\"GET /?parameter=<script>alert(1)</script> HTTP/1.1\""
       }
     ]
-  },
-  {
-    "linenumber": 28,
-    "findings": []
   },
   {
     "linenumber": 29,

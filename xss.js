@@ -168,8 +168,9 @@ module.exports = {
 
           json.findings.push(finding);
         });
-
-        results.push(json);
+        if(json.findings.length !== 0) {
+          results.push(json);
+        }
       });
     } catch (error) {
       callback(error);
