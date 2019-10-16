@@ -229,18 +229,34 @@ function complete(rowCount) {
 
 	logger.trace(`Parsed ${rowCount} rows`);
 
+
 	if(argv.aggressors) {
 		logger.trace(`Display top ${argv.aggressors_display} aggressors`);
 		aggressors.topAggressors(argv.aggressors_display, function(result) {
 
 		});
-		logger.trace(`Display top aggressors as json`);
-		aggressors.aggressorsAsJSON(function(result) {
-			let data = JSON.stringify(result, null, 2);
 
+		logger.trace(`Write aggressors as json`);
+		aggressors.asJSON(function(error, result) {
+			if(error) { logger.error(`** aggressors.asJSON: error >> ${error}`); }
+
+			let data = JSON.stringify(result, null, 2);
 			fs.writeFile('aggressors.json', data, (err) => {
-				if(err) throw err;
-				console.log('Data written to file');
+				if(err) { logger.error(`** aggressors.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
+
+	if(argv.xss) {
+		logger.trace(`Write xss as json`);
+		xss.asJSON(function(error, result) {
+			if(error) { logger.error(`** xss.asJSON: error >> ${error}`); }
+
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('xss.json', data, (err) => {
+				if(err) { logger.error(`** xss.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
 			});
 		});
 	}
@@ -354,6 +370,7 @@ function process(linenumber, data) {
 							logger.trace(`** check xss: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							xss.scan(
+								linenumber,
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
 									if(error) { logger.error(`** xss.scan: error >> ${error}`); return callback(error); }

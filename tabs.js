@@ -4,6 +4,7 @@ function openPage(pageName, elmnt, color) {
   tabcontent = document.getElementsByClassName("tabcontent");
   for(i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
+
   }
 
   // Remove the background color of all tablinks/buttons
@@ -19,5 +20,7 @@ function openPage(pageName, elmnt, color) {
   elmnt.style.backgroundColor = color;
 }
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+window.addEventListener('DOMContentLoaded', (event) => {
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+});

@@ -1,0 +1,227 @@
+[
+  {
+    "linenumber": 1,
+    "findings": [
+      {
+        "payload": "javascript[:\"]",
+        "input": "\"GET /?param=<BGSOUND SRC=\"javascript:alert('XSS');\"> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<BGSOUND SRC=\"javascript:alert('XSS');\"> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<BGSOUND SRC=\"javascript:alert('XSS');\"> HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 2,
+    "findings": []
+  },
+  {
+    "linenumber": 3,
+    "findings": []
+  },
+  {
+    "linenumber": 4,
+    "findings": []
+  },
+  {
+    "linenumber": 5,
+    "findings": []
+  },
+  {
+    "linenumber": 6,
+    "findings": []
+  },
+  {
+    "linenumber": 7,
+    "findings": []
+  },
+  {
+    "linenumber": 8,
+    "findings": []
+  },
+  {
+    "linenumber": 9,
+    "findings": []
+  },
+  {
+    "linenumber": 10,
+    "findings": []
+  },
+  {
+    "linenumber": 11,
+    "findings": []
+  },
+  {
+    "linenumber": 12,
+    "findings": []
+  },
+  {
+    "linenumber": 13,
+    "findings": []
+  },
+  {
+    "linenumber": 14,
+    "findings": []
+  },
+  {
+    "linenumber": 15,
+    "findings": []
+  },
+  {
+    "linenumber": 16,
+    "findings": []
+  },
+  {
+    "linenumber": 17,
+    "findings": []
+  },
+  {
+    "linenumber": 18,
+    "findings": []
+  },
+  {
+    "linenumber": 19,
+    "findings": []
+  },
+  {
+    "linenumber": 20,
+    "findings": []
+  },
+  {
+    "linenumber": 21,
+    "findings": []
+  },
+  {
+    "linenumber": 22,
+    "findings": []
+  },
+  {
+    "linenumber": 23,
+    "findings": []
+  },
+  {
+    "linenumber": 24,
+    "findings": []
+  },
+  {
+    "linenumber": 25,
+    "findings": []
+  },
+  {
+    "linenumber": 26,
+    "findings": []
+  },
+  {
+    "linenumber": 27,
+    "findings": [
+      {
+        "payload": "<script",
+        "input": "\"GET /?parameter=<script>alert(1)</script> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?parameter=<script>alert(1)</script> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?parameter=<script>alert(1)</script> HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 28,
+    "findings": []
+  },
+  {
+    "linenumber": 29,
+    "findings": [
+      {
+        "payload": "<script",
+        "input": "\"GET /?param=<script>var a = \"</script> <script> alert('XSS !'); </script> <script>\";</script> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<script>var a = \"</script> <script> alert('XSS !'); </script> <script>\";</script> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<script>var a = \"</script> <script> alert('XSS !'); </script> <script>\";</script> HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 30,
+    "findings": [
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=%3Cscript%3Evar+a+%3D+%22%3C%2Fscript%3E+%3Cscript%3E+alert%28%27XSS+%21%27%29%3B+%3C%2Fscript%3E+%3Cscript%3E%22%3B%3C%2Fscript%3E HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=%3Cscript%3Evar+a+%3D+%22%3C%2Fscript%3E+%3Cscript%3E+alert%28%27XSS+%21%27%29%3B+%3C%2Fscript%3E+%3Cscript%3E%22%3B%3C%2Fscript%3E HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 31,
+    "findings": [
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=%3CBGSOUND%20SRC%3D%22javascript%3Aalert%28%27XSS%27%29%3B%22%3E HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=%3CBGSOUND%20SRC%3D%22javascript%3Aalert%28%27XSS%27%29%3B%22%3E HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 47,
+    "findings": [
+      {
+        "payload": "javascript[:\"]",
+        "input": "\"GET /?param=<IMG SRC=javascript:alert('XSS')> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<IMG SRC=javascript:alert('XSS')> HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<IMG SRC=javascript:alert('XSS')> HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 48,
+    "findings": [
+      {
+        "payload": "onmouseover[ =>]",
+        "input": "\"GET /?param=onmouseover= HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 49,
+    "findings": [
+      {
+        "payload": "onmouseover[ =>]",
+        "input": "\"GET /?param=onmouseover> HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 50,
+    "findings": [
+      {
+        "payload": "onmouseover[ =>]",
+        "input": "\"GET /?param=onmouseover  HTTP/1.1\""
+      }
+    ]
+  }
+]

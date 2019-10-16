@@ -2,6 +2,9 @@ const fs = require('fs');
 
 const logger = require('./logger.js');
 
+const map = new Map();
+
+
 //https://github.com/PHPIDS/PHPIDS/blob/master/lib/IDS/default_filter.xml
 //https://github.com/pgaijin66/XSS-Payloads/blob/master/payload.txt
 //pull some stuff in from here
@@ -27,7 +30,7 @@ module.exports = {
 
     logger.trace(file);
 
-    if (file === undefined) {
+    if(file === undefined) {
       file = 'xss_payloads_rf_v0.1.txt';
       //file = 'test_xss_payloads.txt';
     }
@@ -45,24 +48,34 @@ module.exports = {
       callback(null, count);
     });
   },
-  scan: function(input, callback) {
+  scan: function(linenumber, input, callback) {
 
     try {
 
       logger.trace(input);
       var results = [];
+      var findings = [];
       words.forEach(function(word) {
+        var finding = {};
         var regex = new RegExp(word.payload, 'i');
 
-        if (regex.test(input.toUpperCase())) {
+        if(regex.test(input.toUpperCase())) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload}`);
+
+          finding.payload = word.payload;
+          finding.input = input;
+          findings.push(finding);
         }
-        if (regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
+        if(regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
+          finding.payload = word.payload;
+          finding.input = input;
+          findings.push(finding);
         }
       });
+      map.set(linenumber, findings);
 
     } catch (error) {
       logger.error(error);
@@ -80,11 +93,11 @@ module.exports = {
       words.forEach(function(word) {
         var regex = new RegExp(word.payload, 'i');
 
-        if (regex.test(input.toUpperCase())) {
+        if(regex.test(input.toUpperCase())) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload}`);
         }
-        if (regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
+        if(regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
         }
@@ -116,11 +129,11 @@ module.exports = {
         //logger.info(escape(payload));
         //logger.info(fixedEncodeURIComponent(payload));
 
-        if (input.includes(payload)) {
+        if(input.includes(payload)) {
           //logger.info(`it could be xss : ${payload}`);
           results.push(`it could be xss : ${payload}`);
         }
-        if (input.includes(fixedEncodeURIComponent(payload))) {
+        if(input.includes(fixedEncodeURIComponent(payload))) {
           //logger.info(`it could be xss : ${payload}`);
           results.push(`it could be xss : ${fixedEncodeURIComponent(payload)} URI encoded`);
         }
@@ -132,7 +145,37 @@ module.exports = {
 
     callback(null, results);
   },
+  asJSON: function(callback) {
+    logger.info(`xss.asJSON`);
 
+    try {
+      var results = [];
+
+      map.forEach(function(value, key) {
+        var json = {
+          linenumber: {},
+          findings: []
+        };
+
+        json.linenumber = key;
+        value.forEach(function(item, index) {
+          var finding = {
+            payload: {},
+            input: {}
+          }
+          finding.payload = item.payload;
+          finding.input = item.input;
+
+          json.findings.push(finding);
+        });
+
+        results.push(json);
+      });
+    } catch (error) {
+      callback(error);
+    }
+    callback(null, results);
+  },
   help: function() {
     return 'usage: hey there.... smileyface';
   }

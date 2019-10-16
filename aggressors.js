@@ -30,7 +30,6 @@ module.exports = {
 
         var counter = 0;
 
-
         for(const [key, value] of mapAsc.entries()) {
             counter++;
             logger.info(`${key} \t ${value}`);
@@ -40,27 +39,33 @@ module.exports = {
         }
         callback();
     },
-    aggressorsAsJSON: function(callback) {
+    asJSON: function(callback) {
+        logger.info(`aggressors.asJSON`);
 
-        var results = [];
+        try {
+            var results = [];
 
-        let mapAsc = new Map([...map].sort(([k, v], [k2, v2]) => {
-            if(v < v2) { return 1; }
-            if(v > v2) { return -1; }
-            return 0;
-        }));
+            let mapAsc = new Map([...map].sort(([k, v], [k2, v2]) => {
+                if(v < v2) { return 1; }
+                if(v > v2) { return -1; }
+                return 0;
+            }));
 
-        mapAsc.forEach(function(value, key) {
-            var json = {
-                source: {},
-                count: {}
-            };
+            mapAsc.forEach(function(value, key) {
+                var json = {
+                    source: {},
+                    count: {}
+                };
 
-            json.source = key;
-            json.count = value;
-            results.push(json);
-        });
-        callback(results);
+                json.source = key;
+                json.count = value;
+                results.push(json);
+            });
+        } catch (error) {
+            callback(error);
+        }
+        callback(null, results);
+
     },
     scanWithStatus: function(source, status, callback) {
 

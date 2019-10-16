@@ -1,23 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
   var aggressors;
-  document.getElementById('fileAggressors').addEventListener('change',
-    function selectedFileChanged() {
-      if(this.files.length === 0) {
-        console.log('No file selected.');
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = function fileReadCompleted() {
-        aggressors = reader.result;
-      };
-      reader.readAsText(this.files[0]);
-    });
+  document.getElementById('fileAggressors').addEventListener('change', function selectedFileChanged() {
+    if(this.files.length === 0) {
+      console.log('No file selected.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function fileReadCompleted() {
+      aggressors = reader.result;
+    };
+    reader.readAsText(this.files[0]);
+  });
 
 
-  let form = document.querySelector("form")
-
+  let form = document.querySelector("#Aggressors form");
   form.aggressors.addEventListener("click", () => {
 
     let out = form.out;
@@ -47,6 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
     out.appendChild(document.createElement("p"));
     out.appendChild(tbl);
   });
+
+
+
+
+
 
   form.clear.addEventListener("click", () => {
     form.out.innerHTML = "";
