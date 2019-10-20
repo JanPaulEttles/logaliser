@@ -2,6 +2,7 @@ https://guides.github.com/features/mastering-markdown/
 
 
 ## Project Set up
+* sudo apt install gulp
 
 * git clone https://github.com/janpaulettles/logaliser.git
 * cd logaliser
@@ -10,6 +11,8 @@ https://guides.github.com/features/mastering-markdown/
 * npm install yargs
 * npm install async
 * npm install readline
+* npm install gulp browser-sync gulp-sass gulp-util --save-dev
+* npm install bootstrap jquery popper.js --save
 
 ## Add stuff
 * git add .
@@ -81,3 +84,13 @@ https://guides.github.com/features/mastering-markdown/
 * "indent_char": "\t",
 * // Indentation size
 * "indent_size": 1,
+
+
+## Make an image
+
+https://twithelper.com/long-text-to-image-converter
+
+
+
+
+

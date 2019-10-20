@@ -123,11 +123,6 @@ module.exports = {
 
 
       payloads.forEach(function(payload) {
-        //logger.info(input);
-        //logger.info(payload);
-        //logger.info(encodeURIComponent(payload));
-        //logger.info(escape(payload));
-        //logger.info(fixedEncodeURIComponent(payload));
 
         if(input.includes(payload)) {
           //logger.info(`it could be xss : ${payload}`);

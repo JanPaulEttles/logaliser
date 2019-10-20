@@ -260,6 +260,18 @@ function complete(rowCount) {
 			});
 		});
 	}
+	if(argv.sqli) {
+		logger.trace(`Write sqli as json`);
+		sqli.asJSON(function(error, result) {
+			if(error) { logger.error(`** xss.asJSON: error >> ${error}`); }
+
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('sqli.json', data, (err) => {
+				if(err) { logger.error(`** sqli.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
 
 	/*
 		statuscodes.results(function(result) {
@@ -325,6 +337,7 @@ function process(linenumber, data) {
 							logger.trace(`** check sqli: `);
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 							sqli.scan(
+								linenumber,
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
 									if(error) { logger.error(`** sqli.scan: error >> ${error}`); return callback(error); }

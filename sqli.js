@@ -2,6 +2,9 @@ const fs = require('fs');
 
 const logger = require('./logger.js');
 
+const map = new Map();
+
+
 const words = [
   { description: 'basic sqli', payload: 'OR 1=1' },
   { description: 'basic sqli', payload: 'OR%201=1' },
@@ -25,7 +28,7 @@ module.exports = {
     logger.trace(file);
 
     var count = 0;
-    if (file === undefined) {
+    if(file === undefined) {
       file = 'sqli_payloads_rf_v0.1.txt';
     }
     var lineReader = readline.createInterface({
@@ -42,22 +45,31 @@ module.exports = {
       callback(null, count);
     });
   },
-  scan: function(input, callback) {
+  scan: function(linenumber, input, callback) {
     try {
       logger.trace(input);
       var results = [];
+      var findings = [];
       words.forEach(function(word) {
+        var finding = {};
         var regex = new RegExp(word.payload, 'i');
 
-        if (regex.test(input.toUpperCase())) {
+        if(regex.test(input.toUpperCase())) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload}`);
+          finding.payload = word.payload;
+          finding.input = input;
+          findings.push(finding);
         }
-        if (regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
+        if(regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
+          finding.payload = word.payload;
+          finding.input = input;
+          findings.push(finding);
         }
       });
+      map.set(linenumber, findings);
 
     } catch (error) {
       logger.error(error);
@@ -74,11 +86,11 @@ module.exports = {
       var results = [];
 
       payloads.forEach(function(payload) {
-        if (input.includes(payload)) {
+        if(input.includes(payload)) {
           //logger.info(`it could be sqli : ${payload}`);
           results.push(`it could be sqli : ${payload}`);
         }
-        if (input.includes(fixedEncodeURIComponent(payload))) {
+        if(input.includes(fixedEncodeURIComponent(payload))) {
           //logger.info(`it could be sqli : ${payload}`);
           results.push(`it could be sqli : ${fixedEncodeURIComponent(payload)} URI encoded`);
         }
@@ -88,6 +100,38 @@ module.exports = {
       callback(error);
     }
 
+    callback(null, results);
+  },
+  asJSON: function(callback) {
+    logger.info(`sqli.asJSON`);
+
+    try {
+      var results = [];
+
+      map.forEach(function(value, key) {
+        var json = {
+          linenumber: {},
+          findings: []
+        };
+
+        json.linenumber = key;
+        value.forEach(function(item, index) {
+          var finding = {
+            payload: {},
+            input: {}
+          }
+          finding.payload = item.payload;
+          finding.input = item.input;
+
+          json.findings.push(finding);
+        });
+        if(json.findings.length !== 0) {
+          results.push(json);
+        }
+      });
+    } catch (error) {
+      callback(error);
+    }
     callback(null, results);
   },
   help: function() {

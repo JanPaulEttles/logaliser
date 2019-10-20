@@ -1,70 +1,247 @@
+<!DOCTYPE html>
+<html>
+
 <head>
 	<title>logaliser</title>
-	<link rel='stylesheet' href='basic.css'>
-	<link rel='stylesheet' href='tabs.css'>
-	<script type="text/javascript" src="xssjson.js"></script>
-	<script type="text/javascript" src="aggressorsjson.js"></script>
-	<script type="text/javascript" src="tabs.js"></script>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--
+
+	<script type="text/javascript" src="headersjson.js"></script>
+	<script type="text/javascript" src="methodsjson.js"></script>
+	<script type="text/javascript" src="creditcardsjson.js"></script>
+	<script type="text/javascript" src="useragentsjson.js"></script>
+-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+	<link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script type="text/javascript" src="js/sqlijson.js"></script>
+	<script type="text/javascript" src="js/xssjson.js"></script>
+	<script type="text/javascript" src="js/aggressorsjson.js"></script>
+	<link rel='stylesheet' href='css/style.css'>
+	<!--<link rel='stylesheet' href='css/tabs.css'>
+	<script type="text/javascript" src="js/tabs.js"></script>-->
 </head>
 
 <body>
-	<h1>logaliser</h1>
-	<button class="tablink" onclick="openPage('Home', this, '#AAA')">Home</button>
-	<button class="tablink" onclick="openPage('Aggressors', this, '#AAA')">Aggressors</button>
-	<button class="tablink" onclick="openPage('XSS', this, '#AAA')" id="defaultOpen">XSS</button>
-	<button class="tablink" onclick="openPage('SQLi', this, '#AAA')">SQLi</button>
-	<button class="tablink" onclick="openPage('Contact', this, '#AAA')">Contact</button>
-	<button class="tablink" onclick="openPage('About', this, '#AAA')">About</button>
-	<div id="Home" class="tabcontent">
-		<h3>Home</h3>
-		<p>Home is where the heart is..</p>
+	<div class="container-fluid">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<a class="navbar-brand" href="#">
+				<img src="assets/logo.png" class="logo rounded" alt="">
+			</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contact</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">About</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 	</div>
-	<div id="Aggressors" class="tabcontent">
-		<h3>Aggressors</h3>
-		<p>
-			<form>
-				<input type="file" id="fileAggressors">
-				<input type="input" id="aggressorsCount">
-				<button name=aggressors type=button>Refresh Accessors</button>
-				<button name=clear type=button>Clear</button>
-				<p>
+	<!--
+	<div class="container">
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle btn-lg" type="button" id="home" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hero
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li class="dropdown-header">Header</li>
+				<li><a href="#">Item</a></li>
+				<li><a href="#">Item</a></li>
+				<li><a href="#">Item</a></li>
+				<li role="separator" class="divider"></li>
+				<li class="dropdown-header">Header</li>
+				<li><a href="#">Item</a></li>
+				<li><a href="#">Item</a></li>
+				<li><a href="#">Item</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container">
+		<div class="jumbotron">
+			<img src="assets/logo.png" class="img-responsive img-rounded pull-left" alt="">
+			<span>meh</span>
+			<p class="websiteSlogan">stuff about stuff</p>
+		</div>
+	</div>
+
+-->
+	<div class="container-fluid mt-2">
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link active" href="#Home">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Aggressors">Aggressors</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#XSS">XSS</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#SQLi">SQLi</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Methods">Methods</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Headers">Headers</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#CreditCards">Credit Cards</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#UserAgents">User Agents</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div id="Home" class="container-fluid tab-pane active bg"><br>
+				<div class="jumbotron">
+					<h1 class="display-4">Simple. Elegant. Awesome.</h1>
+					<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+					<p class="lead">
+						<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+					</p>
+				</div>
+				<!--
+				<div class="row">
+					<div class="col">
+						<div class="card">
+							<div class="card-body text-center">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title</p>
+								<a href="#" class="card-link">Another link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card">
+							<div class="card-body text-center">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title</p>
+								<a href="#" class="card-link">Another link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card">
+							<div class="card-body text-center">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">Some quick example text to build on the card title</p>
+								<a href="#" class="card-link">Another link</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			-->
+			</div>
+			<div id="Aggressors" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form class="form-row">
+						<input type="file" id="fileAggressors">
+						<input type="input" id="aggressorsCount">
+						<button name=aggressors type=button>Refresh Accessors</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
 					<output name=out></output>
-				</p>
-			</form>
-		</p>
-	</div>
-	<div id="Contact" class="tabcontent">
-		<p>
-			<h3>Contact</h3>
-			<p>Get in touch, or swing by for a cup of coffee.</p>
-		</p>
-	</div>
-	<div id="XSS" class="tabcontent">
-		<h3>XSS</h3>
-		<p>
-			<form>
-				<input type="file" id="fileXSS">
-				<input type="input" id="xssCount" value="10">
-				<button name=xss type=button>Refresh XSS</button>
-				<button name=clear type=button>Clear</button>
-				<p>
+				</div>
+			</div>
+			<div id="XSS" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<input type="file" id="fileXSS">
+						<input type="input" id="xssCount" value="10">
+						<button name=xss type=button>Refresh XSS</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
 					<output name=out></output>
-				</p>
-			</form>
-		</p>
+				</div>
+			</div>
+			<div id="SQLi" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<input type="file" id="fileSQLi">
+						<input type="input" id="sqliCount" value="10">
+						<button name=sqli type=button>Refresh SQLi</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<output name=out></output>
+				</div>
+			</div>
+			<div id="Methods" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<input type="file" id="fileMethods">
+						<input type="input" id="methodsCount">
+						<button name=methods type=button>Refresh Method</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<output name=out></output>
+				</div>
+			</div>
+			<div id="Headers" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<input type="file" id="fileHeaders">
+						<input type="input" id="headersCount">
+						<button name=headers type=button>Refresh Headers</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<output name=out></output>
+				</div>
+			</div>
+			<div id="CreditCards" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<input type="file" id="fileCreditCards">
+						<input type="input" id="creditcardsCount">
+						<button name=creditcards type=button>Refresh Credit Cards</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<output name=out></output>
+				</div>
+			</div>
+			<div id="UserAgents" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<input type="file" id="fileUserAgents">
+						<input type="input" id="useragentsCount" value="10">
+						<button name=useragents type=button>Refresh User Agents</button>
+						<button name=clear type=button>Clear</button>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<output name=out></output>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div id="SQLi" class="tabcontent">
-		<p>
-			<h3>SQLi</h3>
-			<p>Get in touch, or swing by for a cup of coffee.</p>
-		</p>
-	</div>
-	<div id="About" class="tabcontent">
-		<p>
-			<h3>About</h3>
-			<p>Get in touch, or swing by for a cup of coffee.</p>
-		</p>
-	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</script>
+	<script>
+	$(document).ready(function() {
+		$(".nav-tabs a").click(function() {
+			$(this).tab('show');
+		});
+	});
+	</script>
 </body>
 
 </html>

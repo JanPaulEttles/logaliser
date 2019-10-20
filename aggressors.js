@@ -65,7 +65,6 @@ module.exports = {
             callback(error);
         }
         callback(null, results);
-
     },
     scanWithStatus: function(source, status, callback) {
 

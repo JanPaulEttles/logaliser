@@ -1,2 +1,0 @@
-<BGSOUND SRC="javascript:alert('XSS');">
-<script>var a = "</script> <script> alert('XSS !'); </script> <script>";</script>
