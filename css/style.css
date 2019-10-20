@@ -1,0 +1,44 @@
+.logo {
+  width: auto;
+  height: auto;
+  max-width: 80px;
+
+}
+
+nav.bg-primary {
+  background-color: #FFF !important;
+}
+
+nav div ul li a.nav-link {
+  color: #333 !important;
+}
+
+.navbar {
+  padding-left: 0rem;
+}
+
+.jumbotron {
+  background: rgba(122, 130, 136, 0.6) !important;
+
+}
+
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Raleway;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("../assets/logo.png");
+  padding: 16px;
+  /* Full height */
+
+  height: 100vh;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

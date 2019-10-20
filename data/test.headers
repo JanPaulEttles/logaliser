@@ -1,0 +1,8 @@
+0,source,source,IP/Domain,source ip of request, 10.10.10.10
+1,spacer,dunno,dunno it's blank, -
+2,spacer,dunno,dunno it's blank, -
+3,timestamp,timestamp,with the format, [07/Mar/2004:16:05:49 -0800]
+4,request,method,request/querystring/protocol, "GET /twiki/bin/edit/Main/Double_bounce_sender?topicparent=Main.ConfigurationVariables HTTP/1.1" 
+5,statuscode,statuscode, the response code, ie 401
+6,size,size, the size ofd the response, ie 12846
+7,useragent,useragent,the useragent, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_0) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.79 Safari/537.4"
