@@ -272,7 +272,18 @@ function complete(rowCount) {
 			});
 		});
 	}
+	if(argv.creditcards) {
+		logger.trace(`Write creditcards as json`);
+		creditcards.asJSON(function(error, result) {
+			if(error) { logger.error(`** creditcards.asJSON: error >> ${error}`); }
 
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('creditcards.json', data, (err) => {
+				if(err) { logger.error(`** creditcards.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
 	/*
 		statuscodes.results(function(result) {
 
@@ -304,6 +315,7 @@ function process(linenumber, data) {
 							logger.trace(`headers.getPosition(headers.REQUEST) ${headers.getPosition(headers.REQUEST)}`);
 
 							creditcards.scanWithConfidence(
+								linenumber,
 								data[headers.getPosition(headers.REQUEST)],
 								function(error, results) {
 									if(error) { logger.error(`** creditcards.scanWithConfidence: error >> ${error}`); return callback(error); }

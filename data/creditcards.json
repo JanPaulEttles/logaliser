@@ -1,0 +1,85 @@
+[
+  {
+    "linenumber": 11,
+    "findings": [
+      {
+        "input": "\"GET /6759649826438453 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 12,
+    "findings": [
+      {
+        "input": "\"GET /5555555555554444 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 13,
+    "findings": [
+      {
+        "input": "\"GET /5555555555554444 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 14,
+    "findings": [
+      {
+        "input": "\"GET /5555555454545454 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 15,
+    "findings": [
+      {
+        "input": "\"GET /5454545454545454 HTTP/1.1\""
+      },
+      {
+        "input": "\"GET /5454545454545454 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 16,
+    "findings": [
+      {
+        "input": "\"GET /payment.do?type=master&number=5555555454545454 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 17,
+    "findings": [
+      {
+        "input": "\"GET /4494181512079255 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 18,
+    "findings": [
+      {
+        "input": "\"GET /type=visa&number=4494181512077777 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 19,
+    "findings": [
+      {
+        "input": "\"GET /4494-1815-1207-8888 HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 20,
+    "findings": [
+      {
+        "input": "\"GET /4494%201815%201207%209999 HTTP/1.1\""
+      }
+    ]
+  }
+]

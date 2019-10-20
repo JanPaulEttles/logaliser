@@ -2,6 +2,7 @@ const fs = require('fs');
 
 const logger = require('./logger.js');
 
+const map = new Map();
 
 //Visa: ^4[0-9]{12}(?:[0-9]{3})?$ All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13.
 const cards = [
@@ -12,44 +13,101 @@ const cards = [
 
 module.exports = {
   scan: function(input, callback) {
-    logger.trace(input);
+    try {
+      logger.trace(input);
 
-    var clean = input.replace(/%20|[-+()\s]/g, '');
+      var findings = [];
 
-    cards.forEach(function(card) {
-      var number = new RegExp(card.number, 'i');
-      if (number.test(clean)) {
-        logger.info(`it could be a ${card.type}: ${number.exec(clean)[0]}`);
-      }
-    });
-    callback();
+      var clean = input.replace(/%20|[-+()\s]/g, '');
+
+      cards.forEach(function(card) {
+        var finding = {};
+        var number = new RegExp(card.number, 'i');
+        if(number.test(clean)) {
+          finding.card = card.type;
+          finding.input = input;
+          logger.info(`it could be a ${card.type}: ${number.exec(clean)[0]}`);
+          findings.push(finding);
+        }
+        map.set(linenumber, findings);
+      });
+
+    } catch (error) {
+      logger.error(error);
+      callback(error);
+    }
+    callback(null, findings);
+
   },
-  scanWithConfidence: function(input, callback) {
-    logger.trace(input);
+  scanWithConfidence: function(linenumber, input, callback) {
+    try {
+      logger.trace(input);
 
-    var results = [];
+      var results = [];
+      var findings = [];
 
-    var clean = input.substring(input.indexOf(' ') + 1, input.length);
-    var clean = clean.substring(0, clean.lastIndexOf(' '));
-    var clean = clean.replace(/%20|[-+()\s]/g, '');
+      var clean = input.substring(input.indexOf(' ') + 1, input.length);
+      var clean = clean.substring(0, clean.lastIndexOf(' '));
+      var clean = clean.replace(/%20|[-+()\s]/g, '');
 
-    cards.forEach(function(card) {
-      var checks = Object.keys(card).length;
-      var score = 0;
+      cards.forEach(function(card) {
+        var finding = {};
 
-      for (var property in card) {
-        if (check(clean, card[property])) { score++; }
-      }
-      if (score !== 0) {
-        var confidence = score * 100 / checks;
+        var checks = Object.keys(card).length;
+        var score = 0;
 
-        logger.debug(`${confidence}% confident it could be a ${card.type}: ${clean}`);
+        for(var property in card) {
+          if(check(clean, card[property])) { score++; }
+        }
+        if(score !== 0) {
+          var confidence = score * 100 / checks;
 
-        var summary = `After ${score} check there is ${confidence}% confidence rating that it could be a ${card.type}: ${clean}`;
+          logger.debug(`${confidence}% confident it could be a ${card.type}: ${clean}`);
 
-        results.push(summary);
-      }
-    });
+          var summary = `After ${score} check there is ${confidence}% confidence rating that it could be a ${card.type}: ${clean}`;
+          finding.card = card.type;
+          finding.input = input;
+          findings.push(finding);
+          results.push(summary);
+        }
+        map.set(linenumber, findings);
+      });
+    } catch (error) {
+      logger.error(error);
+      callback(error);
+    }
+    callback(null, results);
+  },
+  asJSON: function(callback) {
+    logger.info(`creditcards.asJSON`);
+
+    try {
+      var results = [];
+
+      map.forEach(function(value, key) {
+        var json = {
+          linenumber: {},
+          findings: []
+        };
+
+        json.linenumber = key;
+        value.forEach(function(item, index) {
+          var finding = {
+            payload: {},
+            input: {}
+          }
+          finding.payload = item.payload;
+          finding.input = item.input;
+
+          json.findings.push(finding);
+        });
+        if(json.findings.length !== 0) {
+          results.push(json);
+        }
+      });
+    } catch (error) {
+      callback(error);
+    }
     callback(null, results);
   },
   help: function() {

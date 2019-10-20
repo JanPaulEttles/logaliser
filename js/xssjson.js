@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     let tbl = document.createElement("table");
     tbl.classList.add("table");
+    tbl.classList.add("table-responsive");
     tbl.classList.add("table-hover");
     tbl.classList.add("table-striped");
     //tbl.createCaption().innerText = "Filtered Results";

@@ -6,22 +6,17 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!--
-
-	<script type="text/javascript" src="headersjson.js"></script>
-	<script type="text/javascript" src="methodsjson.js"></script>
-	<script type="text/javascript" src="creditcardsjson.js"></script>
-	<script type="text/javascript" src="useragentsjson.js"></script>
--->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
 	<link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script type="text/javascript" src="js/sqlijson.js"></script>
 	<script type="text/javascript" src="js/xssjson.js"></script>
 	<script type="text/javascript" src="js/aggressorsjson.js"></script>
+	<script type="text/javascript" src="js/creditcardsjson.js"></script>
+	<script type="text/javascript" src="js/headersjson.js"></script>
+	<script type="text/javascript" src="js/methodsjson.js"></script>
+	<script type="text/javascript" src="js/useragentsjson.js"></script>
 	<link rel='stylesheet' href='css/style.css'>
-	<!--<link rel='stylesheet' href='css/tabs.css'>
-	<script type="text/javascript" src="js/tabs.js"></script>-->
 </head>
 
 <body>
@@ -148,7 +143,7 @@
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 			<div id="XSS" class="container-fluid tab-pane fade"><br>
@@ -161,7 +156,7 @@
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 			<div id="SQLi" class="container-fluid tab-pane fade"><br>
@@ -174,46 +169,46 @@
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 			<div id="Methods" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
 						<input type="file" id="fileMethods">
-						<input type="input" id="methodsCount">
+						<input type="input" id="methodsCount" value="10">
 						<button name=methods type=button>Refresh Method</button>
 						<button name=clear type=button>Clear</button>
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 			<div id="Headers" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
 						<input type="file" id="fileHeaders">
-						<input type="input" id="headersCount">
+						<input type="input" id="headersCount" value="10">
 						<button name=headers type=button>Refresh Headers</button>
 						<button name=clear type=button>Clear</button>
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 			<div id="CreditCards" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
 						<input type="file" id="fileCreditCards">
-						<input type="input" id="creditcardsCount">
+						<input type="input" id="creditcardsCount" value="10">
 						<button name=creditcards type=button>Refresh Credit Cards</button>
 						<button name=clear type=button>Clear</button>
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 			<div id="UserAgents" class="container-fluid tab-pane fade"><br>
@@ -226,7 +221,7 @@
 					</form>
 				</div>
 				<div class="container-fluid">
-					<output name=out></output>
+					<output name="out"></output>
 				</div>
 			</div>
 		</div>
