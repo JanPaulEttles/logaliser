@@ -13,13 +13,16 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(this.files[0]);
   });
 
-
   let form = document.querySelector("#Aggressors form");
   form.aggressors.addEventListener("click", () => {
 
     let out = document.querySelector("#Aggressors div output");
 
     let count = form.aggressorsCount.value;
+    console.log('count: ' + count);
+    if(count === undefined) {
+      count = 10;
+    }
     let aggressorsobj = JSON.parse(aggressors);
     if(!aggressorsobj.length) {
       consle.log('no data');
