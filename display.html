@@ -35,13 +35,16 @@
 							<a class="dropdown-item" data-toggle="modal" data-target="#allModal">All</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" data-toggle="modal" data-target="#aggressorsModal">Aggressors</a>
-							<a class="dropdown-item" href="#">Credit Cards</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#creditcardsModal">Credit Cards</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">XSS</a>
-							<a class="dropdown-item" href="#">SQLi</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#xssModal">XSS</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#sqliModal">SQLi</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Status Codes</a>
-							<a class="dropdown-item" href="#">User Agents</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#methodsModal">Methods</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#statuscodesModal">Status Codes</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#useragentsModal">User Agents</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" data-toggle="modal" data-target="#precheckModal">Precheck</a>
 						</div>
 					</li>
 					<li class="nav-item">
@@ -223,7 +226,7 @@
 						This is the switch that can be used to scan for everything.
 						<br>
 						<br>
-						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --all</kbd></button>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --all</kbd></button>
 						<br>
 						<br>
 						This will create a file called aggressors.json, xss.json, sqli.json etc and will be, by default in the data folder.
@@ -244,7 +247,7 @@
 				</div>
 				<div class="modal-body">
 					<p>
-						This is the short hand version of the switches that can be used to scan for aggressive sources.
+						This is the short hand version of the switches that can be used to scan for aggressive sources. In this example the top 10 results will be displayed during the scan.
 						<br>
 						<br>
 						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --a --ad 10</kbd></button>
@@ -258,6 +261,223 @@
 						This is the long hand version of the swtiches that can be used to scan for aggressive sources.<br>
 						<br>
 						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --aggressors --aggressors_display 10</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="creditcardsModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Credit Cards</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for credit cards.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --cc</kbd></button>
+						<br>
+						<br>
+						This will create a file called creditcards.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the switches that can be used to scan for credit cards.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --creditcards</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="xssModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on XSS</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for xss attempts.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --x</kbd></button>
+						<br>
+						<br>
+						This will create a file called xss.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for xss attempts.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --xss</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="sqliModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on SQLi</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for aggressive sources.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --s</kbd></button>
+						<br>
+						<br>
+						This will create a file called aggressors.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for aggressive sources.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --sqli</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="methodsModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Methods</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for unusual methods.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --m</kbd></button>
+						<br>
+						<br>
+						This will create a file called methods.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for unusual methods.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --methods</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="statuscodesModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Status Codes</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for unusual statuscodes.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --sc</kbd></button>
+						<br>
+						<br>
+						This will create a file called statuscodes.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for unusual status codes.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --statuscodes</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="useragentsModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on User Agents</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for unusual useragents.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --ua</kbd></button>
+						<br>
+						<br>
+						This will create a file called useragents.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for unusual useragnets.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --useragents</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="precheckModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Precheck</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for lines that do not meet the format required to be scanned.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --p --pd 10</kbd></button>
+						<br>
+						<br>
+						This does not create a json file.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for lines that do not meet the format required to be scanned.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --precheck --precheck_display 10</kbd></button>
 					</p>
 				</div>
 				<div class="modal-footer">
@@ -290,6 +510,7 @@
 			var successful = document.execCommand('copy');
 			var msg = successful ? 'Copied!' : 'Whoops, not copied!';
 			el.attr('data-original-title', msg).tooltip('show');
+			document.body.removeChild(copyTextArea);
 		});
 
 	});

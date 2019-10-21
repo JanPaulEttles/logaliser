@@ -49,56 +49,45 @@ const argv = yargs
 			required: true
 		},
 		all: {
+			alias: 'all',
 			description: 'Scan using all the modules',
 			boolean: true,
-			default: false,
-			alias: 'all'
+			default: false
 		},
 		aggressors: {
+			alias: 'a',
 			description: 'Ananlyse the most agressive hosts',
 			boolean: true,
-			default: false,
-			alias: 'a'
+			default: false
 		},
 		aggressors_display: {
+			alias: 'ad',
 			description: 'Max number of sources to display',
-			default: 10,
-			alias: 'ad'
-		},
-		precheck: {
-			description: 'Run a precheck on the data and display where the line does not meet the number of headers',
-			boolean: true,
-			default: false,
-			alias: 'pc'
-		},
-		precheck_display: {
-			description: 'Max number of lines to display',
-			default: 10,
-			alias: 'pcd'
+			default: 10
 		},
 		creditcards: {
+			alias: 'cc',
 			description: 'Scan for creditcards in the requests',
 			boolean: true,
-			default: false,
-			alias: 'cards'
+			default: false
 		},
 		methods: {
+			alias: 'm',
 			description: 'Scan for incorrect methods in the requests',
 			boolean: true,
-			default: false,
-			alias: 'methods'
+			default: false
 		},
 		xss: {
+			alias: 'x',
 			description: 'Scan for xss in the requests',
 			boolean: true,
-			default: false,
-			alias: 'xss'
+			default: false
 		},
 		xssdeep: {
+			alias: 'xssdeep',
 			description: 'Deep scan for xss in the requests',
 			boolean: true,
-			default: false,
-			alias: 'xssdeep'
+			default: false
 		},
 		sqlipayloads: {
 			alias: 'xsspayloads',
@@ -107,40 +96,51 @@ const argv = yargs
 			required: false
 		},
 		sqli: {
+			alias: 'sqli',
 			description: 'Scan for sqli in the requests',
 			boolean: true,
-			default: false,
-			alias: 'sqli'
+			default: false
 		},
 		sqlideep: {
+			alias: 'sqlideep',
 			description: 'Deep scan for sqli in the requests',
 			boolean: true,
-			default: false,
-			alias: 'sqlideep'
+			default: false
 		},
 		sqlipayloads: {
-			alias: 'sqlipayloads',
+			alias: 'spl',
 			description: "<filename> Log file name",
 			requiresArg: true,
 			required: false
 		},
 		statuscodes: {
+			alias: 'sc',
 			description: 'Scan for statuscodes against sources',
 			boolean: true,
-			default: false,
-			alias: 'statuscodes'
+			default: false
 		},
 		useragents: {
+			alias: 'ua',
 			description: 'Scan for odd useragents',
 			boolean: true,
-			default: false,
-			alias: 'useragents'
+			default: false
+		},
+		precheck: {
+			alias: 'pc',
+			description: 'Run a precheck on the data and display where the line does not meet the number of headers',
+			boolean: true,
+			default: false
+		},
+		precheck_display: {
+			alias: 'pcd',
+			description: 'Max number of lines to display',
+			default: 10
 		},
 		payloads: {
+			alias: 'pl',
 			description: 'Scan for suspicious payloads',
 			boolean: true,
-			default: false,
-			alias: 'payloads'
+			default: false
 		}
 	}).argv;
 
