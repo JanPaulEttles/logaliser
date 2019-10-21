@@ -54,34 +54,6 @@
 			</div>
 		</nav>
 	</div>
-	<!--
-	<div class="container">
-		<div class="dropdown">
-			<button class="btn btn-primary dropdown-toggle btn-lg" type="button" id="home" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Hero
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li class="dropdown-header">Header</li>
-				<li><a href="#">Item</a></li>
-				<li><a href="#">Item</a></li>
-				<li><a href="#">Item</a></li>
-				<li role="separator" class="divider"></li>
-				<li class="dropdown-header">Header</li>
-				<li><a href="#">Item</a></li>
-				<li><a href="#">Item</a></li>
-				<li><a href="#">Item</a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="container">
-		<div class="jumbotron">
-			<img src="assets/logo.png" class="img-responsive img-rounded pull-left" alt="">
-			<span>meh</span>
-			<p class="websiteSlogan">stuff about stuff</p>
-		</div>
-	</div>
-
--->
 	<div class="container-fluid mt-2">
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
@@ -251,7 +223,7 @@
 						This is the switch that can be used to scan for everything.
 						<br>
 						<br>
-						<kbd>node runner.js -i data/test.log -c data/test.headers --a</kbd>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --all</kbd></button>
 						<br>
 						<br>
 						This will create a file called aggressors.json, xss.json, sqli.json etc and will be, by default in the data folder.
@@ -275,7 +247,7 @@
 						This is the short hand version of the switches that can be used to scan for aggressive sources.
 						<br>
 						<br>
-						<kbd>node runner.js -i data/test.log -c data/test.headers --a --ad 10</kbd>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --a --ad 10</kbd></button>
 						<br>
 						<br>
 						This will create a file called aggressors.json and will be, by default in the data folder.
@@ -285,7 +257,7 @@
 					<p>
 						This is the long hand version of the swtiches that can be used to scan for aggressive sources.<br>
 						<br>
-						<kbd>node runner.js -i test.log -c test.headers --aggressors --aggressors_display 10</kbd>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --aggressors --aggressors_display 10</kbd></button>
 					</p>
 				</div>
 				<div class="modal-footer">
@@ -303,6 +275,23 @@
 		$(".nav-tabs a").click(function() {
 			$(this).tab('show');
 		});
+
+		$(".modal-body button").click(function() {
+			//$(this).tab('show');
+			//alert($(this).text());
+			//$(this).select();
+
+			var text = $(this).text();
+			var el = $(this);
+			var copyTextArea = document.createElement("textarea");
+			copyTextArea.value = text;
+			document.body.appendChild(copyTextArea);
+			copyTextArea.select();
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'Copied!' : 'Whoops, not copied!';
+			el.attr('data-original-title', msg).tooltip('show');
+		});
+
 	});
 	</script>
 </body>
