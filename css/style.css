@@ -17,9 +17,18 @@ nav div ul li a.nav-link {
   padding-left: 0rem;
 }
 
+/*
 .jumbotron {
   background: rgba(122, 130, 136, 0.6) !important;
 
+}
+*/
+.vertical-center {
+
+  text-align: center;
+  /* align the inline(-block) elements horizontally */
+
+  /* remove the gap between inline(-block) elements */
 }
 
 /* Set height of body and the document to 100% to enable "full page tabs" */
@@ -35,10 +44,11 @@ html {
   background-image: url("../assets/logo.png");
   padding: 16px;
   /* Full height */
-
+  opacity: 0.5;
   height: 100vh;
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  z-index: -1;
 }

@@ -241,7 +241,7 @@ function complete(rowCount) {
 			if(error) { logger.error(`** aggressors.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('aggressors.json', data, (err) => {
+			fs.writeFile('data/aggressors.json', data, (err) => {
 				if(err) { logger.error(`** aggressors.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -254,7 +254,7 @@ function complete(rowCount) {
 			if(error) { logger.error(`** xss.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('xss.json', data, (err) => {
+			fs.writeFile('data/xss.json', data, (err) => {
 				if(err) { logger.error(`** xss.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -266,7 +266,7 @@ function complete(rowCount) {
 			if(error) { logger.error(`** xss.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('sqli.json', data, (err) => {
+			fs.writeFile('data/sqli.json', data, (err) => {
 				if(err) { logger.error(`** sqli.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -278,12 +278,38 @@ function complete(rowCount) {
 			if(error) { logger.error(`** creditcards.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('creditcards.json', data, (err) => {
+			fs.writeFile('data/creditcards.json', data, (err) => {
 				if(err) { logger.error(`** creditcards.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
 		});
 	}
+	if(argv.headers) {
+		logger.trace(`Write headers as json`);
+		headers.asJSON(function(error, result) {
+			if(error) { logger.error(`** headers.asJSON: error >> ${error}`); }
+
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('data/headers.json', data, (err) => {
+				if(err) { logger.error(`** headers.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
+	if(argv.methods) {
+		logger.trace(`Write methods as json`);
+		methods.asJSON(function(error, result) {
+			if(error) { logger.error(`** methods.asJSON: error >> ${error}`); }
+
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('data/methods.json', data, (err) => {
+				if(err) { logger.error(`** methods.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
+
+
 	/*
 		statuscodes.results(function(result) {
 
@@ -333,6 +359,7 @@ function process(linenumber, data) {
 							logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
 
 							methods.scan(
+								linenumber,
 								data[headers.getPosition(headers.REQUEST)],
 								data[headers.getPosition(headers.STATUSCODE)],
 								function(error, results) {

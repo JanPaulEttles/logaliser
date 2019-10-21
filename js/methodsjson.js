@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let count = form.methodsCount.value;
     console.log('count: ' + count);
-    if(count === undefined) {
+    if(count === "") {
       count = 10;
     }
     let methodsobj = JSON.parse(methods);

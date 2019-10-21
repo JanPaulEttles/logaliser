@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let count = form.xssCount.value;
     console.log('count: ' + count);
-    if(count === undefined) {
+    if(count === "") {
       count = 10;
     }
     let xssobj = JSON.parse(xss);
@@ -42,8 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let x = xssobj[i];
       let row = tbl.insertRow();
       for(let prop in x) {
-
-
         if(Array.isArray(x[prop])) {
           let nestedTable = document.createElement("table");
           for(item of x[prop]) {

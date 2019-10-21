@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let count = form.aggressorsCount.value;
     console.log('count: ' + count);
-    if(count === undefined) {
+    if(count === "") {
       count = 10;
     }
     let aggressorsobj = JSON.parse(aggressors);
@@ -30,8 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     let tbl = document.createElement("table");
     tbl.classList.add("table");
-    //tbl.classList.add("table-responsive");
-    //tbl.setAttribute("width", "100%");
+    tbl.classList.add("table-responsive");
     tbl.classList.add("table-hover");
     tbl.classList.add("table-striped");
     //tbl.createCaption().innerText = "Filtered Results";
@@ -43,7 +42,20 @@ document.addEventListener("DOMContentLoaded", () => {
       let x = aggressorsobj[i];
       let row = tbl.insertRow();
       for(let prop in x) {
-        row.insertCell().innerText = x[prop];
+        if(Array.isArray(x[prop])) {
+          let nestedTable = document.createElement("table");
+          for(item of x[prop]) {
+            let nestedRow = nestedTable.insertRow();
+            for(let p in item) {
+              nestedRow.insertCell().innerText = item[p];
+            }
+          }
+          //row.insertCell().innerText = nestedTable;
+          row.insertCell().appendChild(nestedTable);
+
+        } else {
+          row.insertCell().innerText = x[prop];
+        }
       }
     }
     while(out.firstChild) {
@@ -52,11 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     out.appendChild(document.createElement("p"));
     out.appendChild(tbl);
   });
-
-
-
-
-
 
   form.clear.addEventListener("click", () => {
     form.out.innerHTML = "";

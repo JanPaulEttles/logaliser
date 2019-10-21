@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let count = form.creditcardsCount.value;
     console.log('count: ' + count);
-    if(count === undefined) {
+    if(count === "") {
       count = 10;
     }
     let creditcardsobj = JSON.parse(creditcards);

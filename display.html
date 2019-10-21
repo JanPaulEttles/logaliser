@@ -27,6 +27,23 @@
 			</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
+							Modules
+						</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" data-toggle="modal" data-target="#allModal">All</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" data-toggle="modal" data-target="#aggressorsModal">Aggressors</a>
+							<a class="dropdown-item" href="#">Credit Cards</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">XSS</a>
+							<a class="dropdown-item" href="#">SQLi</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Status Codes</a>
+							<a class="dropdown-item" href="#">User Agents</a>
+						</div>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Contact</a>
 					</li>
@@ -93,45 +110,41 @@
 			</li>
 		</ul>
 		<div class="tab-content">
-			<div id="Home" class="container-fluid tab-pane active bg"><br>
-				<div class="jumbotron">
-					<h1 class="display-4">Simple. Elegant. Awesome.</h1>
-					<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-					<p class="lead">
-						<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-					</p>
+			<div id="Home" class="container-fluid tab-pane active"><br>
+				<!--<div class="bg"></div>-->
+				<div class="jumbotron vertical-center">
+					<h1 class="display-4">Simple. Extensible. Awesome.</h1>
+					<p class="lead">logaliser allows you to search logs files for indicators of conpromise. logaliser is desgined to be easy to use, easy to extend and customise, and to limit the number of false positives.</p>
 				</div>
-				<!--
 				<div class="row">
 					<div class="col">
 						<div class="card">
 							<div class="card-body text-center">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">Some quick example text to build on the card title</p>
-								<a href="#" class="card-link">Another link</a>
+								<h5 class="card-title">Configurable</h5>
+								<p class="card-text">You can choose to run a range of different scans to look for specifics indicators. For instance you can search for only Credit Card numbers, or you can look for XSS attempts.</p>
+								<a href="#" class="card-link">Link to Help</a>
 							</div>
 						</div>
 					</div>
 					<div class="col">
 						<div class="card">
 							<div class="card-body text-center">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">Some quick example text to build on the card title</p>
-								<a href="#" class="card-link">Another link</a>
+								<h5 class="card-title">Free</h5>
+								<p class="card-text">Many companies pay vast amounts of money to analysis logs, logaliser is designed for those that need something that they can quickly and easily deploy at no cost.</p>
+								<a href="#" class="card-link">Link to something</a>
 							</div>
 						</div>
 					</div>
 					<div class="col">
 						<div class="card">
 							<div class="card-body text-center">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">Some quick example text to build on the card title</p>
+								<h5 class="card-title">Extensible</h5>
+								<p class="card-text">logaliser is designed to be extended. Whilst logaliser comes with many modules that look for aggressive sources, xss and sqli attempts you can always create your own.</p>
 								<a href="#" class="card-link">Another link</a>
 							</div>
 						</div>
 					</div>
 				</div>
-			-->
 			</div>
 			<div id="Aggressors" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
@@ -222,6 +235,61 @@
 				</div>
 				<div class="container-fluid">
 					<output name="out"></output>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="allModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on All</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the switch that can be used to scan for everything.
+						<br>
+						<br>
+						<kbd>node runner.js -i data/test.log -c data/test.headers --a</kbd>
+						<br>
+						<br>
+						This will create a file called aggressors.json, xss.json, sqli.json etc and will be, by default in the data folder.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="aggressorsModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Aggressors</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for aggressive sources.
+						<br>
+						<br>
+						<kbd>node runner.js -i data/test.log -c data/test.headers --a --ad 10</kbd>
+						<br>
+						<br>
+						This will create a file called aggressors.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swtiches that can be used to scan for aggressive sources.<br>
+						<br>
+						<kbd>node runner.js -i test.log -c test.headers --aggressors --aggressors_display 10</kbd>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>

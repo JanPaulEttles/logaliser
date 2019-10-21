@@ -1,30 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  var methods;
-  document.getElementById('fileMethods').addEventListener('change', function selectedFileChanged() {
+  var headers;
+  document.getElementById('fileHeaders').addEventListener('change', function selectedFileChanged() {
     if(this.files.length === 0) {
       console.log('No file selected.');
       return;
     }
     const reader = new FileReader();
     reader.onload = function fileReadCompleted() {
-      methods = reader.result;
+      headers = reader.result;
     };
     reader.readAsText(this.files[0]);
   });
 
-  let form = document.querySelector("#Methods form");
-  form.methods.addEventListener("click", () => {
+  let form = document.querySelector("#Headers form");
+  form.headers.addEventListener("click", () => {
 
-    let out = document.querySelector("#Methods div output");
+    let out = document.querySelector("#Headers div output");
 
-    let count = form.methodsCount.value;
+    let count = form.headersCount.value;
     console.log('count: ' + count);
-    if(count === undefined) {
+    if(count === "") {
       count = 10;
     }
-    let methodsobj = JSON.parse(methods);
-    if(!methodsobj.length) {
+    let headersobj = JSON.parse(headers);
+    if(!headersobj.length) {
       consle.log('no data');
       return;
     }
@@ -35,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
     tbl.classList.add("table-striped");
     //tbl.createCaption().innerText = "Filtered Results";
     let hdr = tbl.insertRow();
-    for(let prop in methodsobj[0]) {
+    for(let prop in headersobj[0]) {
       hdr.appendChild(document.createElement("th")).innerText = prop;
     }
     for(let i = 0; i < count; i++) {
-      let x = methodsobj[i];
+      let x = headersobj[i];
       let row = tbl.insertRow();
       for(let prop in x) {
 
