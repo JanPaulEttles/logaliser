@@ -18,19 +18,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let out = document.querySelector("#XSS div output");
 
-    let count = form.xssCount.value;
-    console.log('count: ' + count);
-    if(count === "") {
-      count = 10;
-    }
     let xssobj = JSON.parse(xss);
     if(!xssobj.length) {
       consle.log('no data');
       return;
     }
+
+    let count = form.xssCount.value;
+    if(count === "") {
+      count = 10;
+    } else if(count === "*") {
+      count = xssobj.length;
+    }
+
+    let div = document.createElement("div");
+    div.classList.add("table-responsive");
+
+
     let tbl = document.createElement("table");
     tbl.classList.add("table");
-    tbl.classList.add("table-responsive");
     tbl.classList.add("table-hover");
     tbl.classList.add("table-striped");
     //tbl.createCaption().innerText = "Filtered Results";
@@ -61,8 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
     while(out.firstChild) {
       out.removeChild(out.firstChild);
     }
-    out.appendChild(document.createElement("p"));
-    out.appendChild(tbl);
+    out.appendChild(div);
+    div.appendChild(tbl);
   });
 
   form.clear.addEventListener("click", () => {

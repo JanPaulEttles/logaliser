@@ -13,6 +13,10 @@
       {
         "payload": "alert",
         "input": "\"GET /?param=<BGSOUND SRC=\"javascript:alert('XSS');\"> HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?param=<BGSOUND SRC=\"javascript:alert('XSS');\"> HTTP/1.1\""
       }
     ]
   },
@@ -30,6 +34,10 @@
       {
         "payload": "alert",
         "input": "\"GET /?parameter=<script>alert(1)</script> HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?parameter=<script>alert(1)</script> HTTP/1.1\""
       }
     ]
   },
@@ -46,6 +54,10 @@
       },
       {
         "payload": "alert",
+        "input": "\"GET /?param=<script>var a = \"</script> <script> alert('XSS !'); </script> <script>\";</script> HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
         "input": "\"GET /?param=<script>var a = \"</script> <script> alert('XSS !'); </script> <script>\";</script> HTTP/1.1\""
       }
     ]
@@ -90,6 +102,10 @@
       {
         "payload": "alert",
         "input": "\"GET /?param=<IMG SRC=javascript:alert('XSS')> HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?param=<IMG SRC=javascript:alert('XSS')> HTTP/1.1\""
       }
     ]
   },
@@ -108,6 +124,10 @@
       {
         "payload": "onmouseover[ =>]",
         "input": "\"GET /?param=onmouseover> HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?param=onmouseover> HTTP/1.1\""
       }
     ]
   },
@@ -117,6 +137,104 @@
       {
         "payload": "onmouseover[ =>]",
         "input": "\"GET /?param=onmouseover  HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 51,
+    "findings": [
+      {
+        "payload": "onmouseover[ =>]",
+        "input": "\"GET /?param=onmouseover  HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 52,
+    "findings": [
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<img src=xss onerror=alert(1)>  HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=<img src=xss onerror=alert(1)>  HTTP/1.1\""
+      },
+      {
+        "payload": "onerror[ =>]",
+        "input": "\"GET /?param=<img src=xss onerror=alert(1)>  HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?param=<img src=xss onerror=alert(1)>  HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 53,
+    "findings": [
+      {
+        "payload": "onload[ =>]",
+        "input": "\"GET /?param=onload=prompt  HTTP/1.1\""
+      },
+      {
+        "payload": "prompt",
+        "input": "\"GET /?param=onload=prompt  HTTP/1.1\""
+      },
+      {
+        "payload": "prompt",
+        "input": "\"GET /?param=onload=prompt  HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 54,
+    "findings": [
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=onfocus=alert  HTTP/1.1\""
+      },
+      {
+        "payload": "alert",
+        "input": "\"GET /?param=onfocus=alert  HTTP/1.1\""
+      },
+      {
+        "payload": "onfocus[ =>]",
+        "input": "\"GET /?param=onfocus=alert  HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 56,
+    "findings": [
+      {
+        "payload": "xlink:href",
+        "input": "\"GET /?param=<math><a xlink:href=\"//jsfiddle.net/t846h/\">click  HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?param=<math><a xlink:href=\"//jsfiddle.net/t846h/\">click  HTTP/1.1\""
+      }
+    ]
+  },
+  {
+    "linenumber": 57,
+    "findings": [
+      {
+        "payload": "<script",
+        "input": "\"GET /?param=<SCRIPT>String.fromCharCode(97, 108, 101, 114, 116, 40, 49, 41)</SCRIPT>  HTTP/1.1\""
+      },
+      {
+        "payload": "String.fromCharCode",
+        "input": "\"GET /?param=<SCRIPT>String.fromCharCode(97, 108, 101, 114, 116, 40, 49, 41)</SCRIPT>  HTTP/1.1\""
+      },
+      {
+        "payload": "String.fromCharCode",
+        "input": "\"GET /?param=<SCRIPT>String.fromCharCode(97, 108, 101, 114, 116, 40, 49, 41)</SCRIPT>  HTTP/1.1\""
+      },
+      {
+        "payload": "(?:\"[^\"]*[^-]?>)|(?:[^ws]s*/>)|(?:>\")]",
+        "input": "\"GET /?param=<SCRIPT>String.fromCharCode(97, 108, 101, 114, 116, 40, 49, 41)</SCRIPT>  HTTP/1.1\""
       }
     ]
   }

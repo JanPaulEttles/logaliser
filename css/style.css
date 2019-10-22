@@ -17,6 +17,11 @@ nav div ul li a.nav-link {
   padding-left: 0rem;
 }
 
+output {
+  padding-top: 1rem;
+  width: 100%;
+}
+
 /*
 .jumbotron {
   background: rgba(122, 130, 136, 0.6) !important;

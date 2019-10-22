@@ -363,7 +363,7 @@ function process(linenumber, data) {
 								data[headers.getPosition(headers.REQUEST)],
 								data[headers.getPosition(headers.STATUSCODE)],
 								function(error, results) {
-									if(error) { logger.error(`** methods.scanWithConfidence: error >> ${error}`); return callback(error); }
+									if(error) { logger.error(`** methods.scan: error >> ${error}`); return callback(error); }
 									results.forEach(function(result) {
 										logger.info(`line ${linenumber} : ${result}`);
 									});

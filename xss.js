@@ -10,13 +10,26 @@ const map = new Map();
 //pull some stuff in from here
 const words = [
   { description: 'basic xss', payload: '<script' },
+  { description: 'basic xss', payload: '<object' },
+  { description: 'basic xss', payload: '<svg' },
+  { description: 'basic xss', payload: '<embed' },
   { description: 'basic xss', payload: 'javascript[:"]' },
-  { description: 'basic xss', payload: 'svg' },
   { description: 'basic xss', payload: 'alert' },
+  { description: 'basic xss', payload: 'document.location' },
+  { description: 'basic xss', payload: 'document.cookie' },
   { description: 'basic xss', payload: 'onmouseover[ =>]' },
+  { description: 'basic xss', payload: 'onload[ =>]' },
+  { description: 'basic xss', payload: 'onfocus[ =>]' },
+  { description: 'basic xss', payload: 'onerror[ =>]' },
   { description: 'basic xss', payload: 'iframe' },
   { description: 'basic xss', payload: 'prompt' },
   { description: 'basic xss', payload: 'confirm' },
+  { description: 'basic xss', payload: 'xlink:href' },
+  { description: 'basic xss', payload: 'String.fromCharCode' },
+  { description: 'basic xss', payload: '(?:"[^"]*[^-]?>)|(?:[^\w\s]\s*\/>)|(?:>")]' },
+
+
+
 ];
 
 var readline = require('readline');

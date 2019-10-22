@@ -45,6 +45,13 @@ this	should	generate	an	error
 this	should	generate	an	error
 this	should	generate	an	error
 15.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=<IMG SRC=javascript:alert('XSS')> HTTP/1.1"	200	65433	"janbot"
-16.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=onmouseover= HTTP/1.1"	200	65433	"janbot"
+16.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"UPDATE /?param=onmouseover= HTTP/1.1"	200	65433	"janbot"
 17.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=onmouseover> HTTP/1.1"	200	65433	"janbot"
-18.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=onmouseover  HTTP/1.1"	200	65433	"janbot"
+18.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"OPTIONS /?param=onmouseover  HTTP/1.1"	200	65433	"janbot"
+19.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=onmouseover  HTTP/1.1"	200	65433	"evil monkey"
+20.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=<img src=xss onerror=alert(1)>  HTTP/1.1"	200	65433	"evil monkey"
+21.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=onload=prompt  HTTP/1.1"	200	65433	"evil monkey"
+22.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=onfocus=alert  HTTP/1.1"	200	65433	"evil monkey"
+23.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=document.location  HTTP/1.1"	200	65433	"evil monkey"
+24.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=<math><a xlink:href="//jsfiddle.net/t846h/">click  HTTP/1.1"	200	65433	"evil monkey"
+24.12.12.12	-	-	[07/Mar/2004:16:05:49 -0800]	"GET /?param=<SCRIPT>String.fromCharCode(97, 108, 101, 114, 116, 40, 49, 41)</SCRIPT>  HTTP/1.1"	200	65433	"evil monkey"

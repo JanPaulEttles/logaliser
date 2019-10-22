@@ -18,19 +18,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let out = document.querySelector("#SQLi div output");
 
-    let count = form.sqliCount.value;
-    console.log('count: ' + count);
-    if(count === "") {
-      count = 10;
-    }
     let sqliobj = JSON.parse(sqli);
     if(!sqliobj.length) {
       consle.log('no data');
       return;
     }
+
+    let count = form.sqliCount.value;
+    if(count === "") {
+      count = 10;
+    } else if(count === "*") {
+      count = sqlisobj.length;
+    }
+
+    let div = document.createElement("div");
+    div.classList.add("table-responsive");
+
     let tbl = document.createElement("table");
     tbl.classList.add("table");
-    //tbl.setAttribute("width", "100%");
     tbl.classList.add("table-hover");
     tbl.classList.add("table-striped");
     //tbl.createCaption().innerText = "Filtered Results";
@@ -63,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
     while(out.firstChild) {
       out.removeChild(out.firstChild);
     }
-    out.appendChild(document.createElement("p"));
-    out.appendChild(tbl);
+    out.appendChild(div);
+    div.appendChild(tbl);
   });
 
   form.clear.addEventListener("click", () => {

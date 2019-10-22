@@ -18,19 +18,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let out = document.querySelector("#Aggressors div output");
 
-    let count = form.aggressorsCount.value;
-    console.log('count: ' + count);
-    if(count === "") {
-      count = 10;
-    }
     let aggressorsobj = JSON.parse(aggressors);
     if(!aggressorsobj.length) {
       consle.log('no data');
       return;
     }
+
+    let count = form.aggressorsCount.value;
+    if(count === "") {
+      count = 10;
+    } else if(count === "*") {
+      count = aggressorsobj.length;
+    }
+    let div = document.createElement("div");
+    div.classList.add("table-responsive");
+
     let tbl = document.createElement("table");
     tbl.classList.add("table");
-    tbl.classList.add("table-responsive");
     tbl.classList.add("table-hover");
     tbl.classList.add("table-striped");
     //tbl.createCaption().innerText = "Filtered Results";
@@ -61,8 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
     while(out.firstChild) {
       out.removeChild(out.firstChild);
     }
-    out.appendChild(document.createElement("p"));
-    out.appendChild(tbl);
+    out.appendChild(div);
+    div.appendChild(tbl);
   });
 
   form.clear.addEventListener("click", () => {
