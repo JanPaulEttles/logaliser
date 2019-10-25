@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const logger = require('./logger.js');
+const utilities = require('./utilities.js');
 
 const map = new Map();
 
@@ -29,7 +30,9 @@ module.exports = {
           logger.info(`it could be a ${card.type}: ${number.exec(clean)[0]}`);
           findings.push(finding);
         }
-        map.set(linenumber, findings);
+        if(!isEmpty(findings)) {
+          map.set(linenumber, findings);
+        }
       });
 
     } catch (error) {

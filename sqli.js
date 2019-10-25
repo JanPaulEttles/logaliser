@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const logger = require('./logger.js');
+const utilities = require('./utilities.js');
 
 const map = new Map();
 
@@ -69,8 +70,9 @@ module.exports = {
           findings.push(finding);
         }
       });
-      map.set(linenumber, findings);
-
+      if(!isEmpty(findings)) {
+        map.set(linenumber, findings);
+      }
     } catch (error) {
       logger.error(error);
       callback(error);

@@ -1,6 +1,8 @@
 const fs = require('fs');
 
 const logger = require('./logger.js');
+const utilities = require('./utilities.js');
+
 const map = new Map();
 
 const mostcommonmethods = [
@@ -57,8 +59,9 @@ module.exports = {
         }
       }
 
-      map.set(linenumber, findings);
-
+      if(!isEmpty(findings)) {
+        map.set(linenumber, findings);
+      }
     } catch (error) {
       logger.error(error);
       callback(error);

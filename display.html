@@ -123,21 +123,27 @@
 			</div>
 			<div id="Aggressors" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
-					<!--
-					<form class=form-group>
-						<label for="fileAggressors">Data File</label>
-						<input class="form-control-file" type="file" id="fileAggressors">
-						<label for="aggressorsCount">Number of Rows to Display</label>
-						<input type="input" id="aggressorsCount" value="10">
-						<button class="form-control" name=aggressors type=button>Refresh Accessors</button>
-						<button class="form-control" name=clear type=button>Clear</button>
-					</form>
-				-->
 					<form>
-						<input type="file" id="fileAggressors">
-						<input type="input" id="aggressorsCount" value="10">
-						<button name=aggressors type=button>Refresh Accessors</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileAggressors">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressAggressors" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="aggressorsCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="aggressors" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">
@@ -147,10 +153,26 @@
 			<div id="XSS" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
-						<input type="file" id="fileXSS">
-						<input type="input" id="xssCount" value="10">
-						<button name=xss type=button>Refresh XSS</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileXSS">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressXSS" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="xssCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="xss" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">
@@ -160,10 +182,26 @@
 			<div id="SQLi" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
-						<input type="file" id="fileSQLi">
-						<input type="input" id="sqliCount" value="10">
-						<button name=sqli type=button>Refresh SQLi</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileSQLi">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressSQLi" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="sqliCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="sqli" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">
@@ -173,10 +211,26 @@
 			<div id="Methods" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
-						<input type="file" id="fileMethods">
-						<input type="input" id="methodsCount" value="10">
-						<button name=methods type=button>Refresh Method</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileMethods">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressMethods" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="methodsCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="methods" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">
@@ -186,10 +240,26 @@
 			<div id="Headers" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
-						<input type="file" id="fileHeaders">
-						<input type="input" id="headersCount" value="10">
-						<button name=headers type=button>Refresh Headers</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileHeaders">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressHeaders" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="headersCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="headers" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">
@@ -199,10 +269,26 @@
 			<div id="CreditCards" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
-						<input type="file" id="fileCreditCards">
-						<input type="input" id="creditcardsCount" value="10">
-						<button name=creditcards type=button>Refresh Credit Cards</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileCreditCards">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressCreditCards" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="creditcardsCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="creditcards" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">
@@ -212,10 +298,26 @@
 			<div id="UserAgents" class="container-fluid tab-pane fade"><br>
 				<div class="container-fluid">
 					<form>
-						<input type="file" id="fileUserAgents">
-						<input type="input" id="useragentsCount" value="10">
-						<button name=useragents type=button>Refresh User Agents</button>
-						<button name=clear type=button>Clear</button>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileUserAgents">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressCreditCards" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="useragentsCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="useragents" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="container-fluid">

@@ -1,24 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  var sqli;
+  var data;
   document.getElementById('fileSQLi').addEventListener('change', function selectedFileChanged() {
     if(this.files.length === 0) {
       console.log('No file selected.');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = function fileReadCompleted() {
-      sqli = reader.result;
+
+    var progress = document.getElementById('progressSQLi');
+
+    var file = this.files[0];
+    var reader = new FileReader();
+    var size = file.size;
+    var chunk_size = Math.pow(2, 13);
+    var chunks = [];
+    var offset = 0;
+    var bytes = 0;
+    var total = 0;
+    reader.onloadend = function(e) {
+      if(e.target.readyState == FileReader.DONE) {
+        var chunk = e.target.result;
+        bytes += chunk.length;
+        chunks.push(chunk);
+
+        total += chunk.length;
+        var percentage = ((total / size) * 100);
+
+        progress.setAttribute("style", "width:" + percentage + "%");
+        progress.setAttribute("aria-valuenow", percentage);
+
+        if((offset < size)) {
+          offset += chunk_size;
+          var blob = file.slice(offset, offset + chunk_size);
+
+          reader.readAsText(blob);
+        } else {
+          data = chunks.join("");
+        };
+      }
     };
-    reader.readAsText(this.files[0]);
+    var blob = this.files[0].slice(offset, offset + chunk_size);
+    reader.readAsText(blob);
+
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
   });
 
-  let form = document.querySelector("#SQLi form")
+  let form = document.querySelector("#SQLi form");
   form.sqli.addEventListener("click", () => {
 
     let out = document.querySelector("#SQLi div output");
 
-    let sqliobj = JSON.parse(sqli);
+    let sqliobj = JSON.parse(data);
     if(!sqliobj.length) {
       consle.log('no data');
       return;
@@ -28,11 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if(count === "") {
       count = 10;
     } else if(count === "*") {
-      count = sqlisobj.length;
+      count = sqliobj.length;
     }
 
     let div = document.createElement("div");
     div.classList.add("table-responsive");
+
 
     let tbl = document.createElement("table");
     tbl.classList.add("table");
@@ -47,8 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let x = sqliobj[i];
       let row = tbl.insertRow();
       for(let prop in x) {
-
-
         if(Array.isArray(x[prop])) {
           let nestedTable = document.createElement("table");
           for(item of x[prop]) {
@@ -57,9 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
               nestedRow.insertCell().innerText = item[p];
             }
           }
-          //row.insertCell().innerText = nestedTable;
           row.insertCell().appendChild(nestedTable);
-
         } else {
           row.insertCell().innerText = x[prop];
         }
@@ -73,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   form.clear.addEventListener("click", () => {
-    form.out.innerHTML = "";
+    let out = document.querySelector("#SQLi div output");
+    out.innerHTML = "";
   });
 });

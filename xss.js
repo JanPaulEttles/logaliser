@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const logger = require('./logger.js');
+const utilities = require('./utilities.js');
 
 const map = new Map();
 
@@ -80,7 +81,7 @@ module.exports = {
           finding.input = input;
           findings.push(finding);
         }
-        if(regex.test(fixedEncodeURIComponent(input.toUpperCase()))) {
+        if(regex.test(utilities.fixedEncodeURIComponent(input.toUpperCase()))) {
           //logger.info(`it could be ${word.description}: ${word.payload}`);
           results.push(`it could be ${word.description}: ${word.payload} URI encoded`);
           finding.payload = word.payload;
@@ -88,7 +89,9 @@ module.exports = {
           findings.push(finding);
         }
       });
-      map.set(linenumber, findings);
+      if(!utilities.isEmpty(findings)) {
+        map.set(linenumber, findings);
+      }
 
     } catch (error) {
       logger.error(error);
@@ -189,9 +192,3 @@ module.exports = {
     return 'usage: hey there.... smileyface';
   }
 };
-
-const fixedEncodeURIComponent = (str) => {
-  return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
-    return '%' + c.charCodeAt(0).toString(16)
-  })
-}

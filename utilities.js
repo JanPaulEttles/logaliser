@@ -8,7 +8,7 @@ module.exports = {
 
     try {
       var count = 0;
-      vad contents = [];
+      var contents = [];
 
       logger.trace(file);
       var lineReader = readline.createInterface({
@@ -55,13 +55,18 @@ module.exports = {
     }
     callback(null, results);
   },
+  fixedEncodeURIComponent: function(str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+      return '%' + c.charCodeAt(0).toString(16)
+    });
+  },
+  isEmpty: function(obj) {
+    for(var key in obj) {
+      if(obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  },
   help: function() {
     return 'usage: hey there.... smileyface';
   }
 };
-
-const fixedEncodeURIComponent = (str) => {
-  return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
-    return '%' + c.charCodeAt(0).toString(16)
-  })
-}

@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const logger = require('./logger.js');
+const utilities = require('./utilities.js');
 
 const map = new Map();
 
