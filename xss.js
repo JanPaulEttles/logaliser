@@ -159,8 +159,9 @@ module.exports = {
   asJSON: function(callback) {
     logger.info(`xss.asJSON`);
 
+    var results = [];
     try {
-      var results = [];
+
 
       map.forEach(function(value, key) {
         var json = {

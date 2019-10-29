@@ -131,6 +131,12 @@ const argv = yargs
 			boolean: true,
 			default: false
 		},
+		show_failed_reads: {
+			alias: 'sfr',
+			description: 'Display the line numbers where the line does not meet the number of headers',
+			boolean: true,
+			default: false
+		},
 		precheck_display: {
 			alias: 'pcd',
 			description: 'Max number of lines to display',
@@ -308,7 +314,18 @@ function complete(rowCount) {
 			});
 		});
 	}
+	if(argv.useragents) {
+		logger.trace(`Write useragents as json`);
+		useragents.asJSON(function(error, result) {
+			if(error) { logger.error(`** useragents.asJSON: error >> ${error}`); }
 
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('data/useragents.json', data, (err) => {
+				if(err) { logger.error(`** useragents.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
 
 	/*
 		statuscodes.results(function(result) {
@@ -332,7 +349,9 @@ function process(linenumber, data) {
 	} else {
 
 		if(data.length !== headers.getHeaderSize()) {
-			logger.warn(`line ${linenumber} : data.length ${data.length} but headers.getHeaderSize is ${headers.getHeaderSize()}`);
+			if(argv.show_failed_reads) {
+				logger.warn(`line ${linenumber} : data.length ${data.length} but headers.getHeaderSize is ${headers.getHeaderSize()}`);
+			}
 		} else {
 			async.series([
 					function(callback) {
@@ -464,9 +483,13 @@ function process(linenumber, data) {
 							logger.trace(`** check useragents: `);
 							logger.trace(`headers.getPosition(headers.USERAGENT) ${headers.getPosition(headers.USERAGENT)}`);
 							useragents.scan(
+								linenumber,
 								data[headers.getPosition(headers.USERAGENT)],
 								function(error, results) {
 									if(error) { logger.error(`** useragents.scan: error >> ${error}`); return callback(error); }
+									results.forEach(function(result) {
+										logger.info(`line ${linenumber} : ${result}`);
+									});
 								});
 						}
 						callback();
