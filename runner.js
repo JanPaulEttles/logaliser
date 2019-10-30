@@ -8,6 +8,7 @@ const logger = require('./logger.js');
 const headers = require('./headers.js');
 
 const aggressors = require('./aggressors.js');
+const scanners = require('./scanners.js');
 const creditcards = require('./creditcards.js');
 const methods = require('./methods.js');
 const sqli = require('./sqli.js');
@@ -56,12 +57,23 @@ const argv = yargs
 		},
 		aggressors: {
 			alias: 'a',
-			description: 'Ananlyse the most agressive hosts',
+			description: 'Ananlyse the most agressive sources',
 			boolean: true,
 			default: false
 		},
 		aggressors_display: {
 			alias: 'ad',
+			description: 'Max number of sources to display',
+			default: 10
+		},
+		scanners: {
+			alias: 's',
+			description: 'Ananlyse the most scanning activity',
+			boolean: true,
+			default: false
+		},
+		scanners_display: {
+			alias: 'sd',
 			description: 'Max number of sources to display',
 			default: 10
 		},
@@ -161,6 +173,9 @@ function init() {
 			if(!argv.aggressors) {
 				logger.info(`** skipping checks for aggressors: `);
 			}
+			if(!argv.scanners) {
+				logger.info(`** skipping checks for scanners: `);
+			}
 			if(!argv.creditcards) {
 				logger.info(`** skipping checks for credit cards: `);
 			}
@@ -253,7 +268,18 @@ function complete(rowCount) {
 			});
 		});
 	}
+	if(argv.scanners) {
+		logger.trace(`Write scanners as json`);
+		scanners.asJSON(function(error, result) {
+			if(error) { logger.error(`** scanners.asJSON: error >> ${error}`); }
 
+			let data = JSON.stringify(result, null, 2);
+			fs.writeFile('data/scanners.json', data, (err) => {
+				if(err) { logger.error(`** scanners.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
 	if(argv.xss) {
 		logger.trace(`Write xss as json`);
 		xss.asJSON(function(error, result) {
@@ -474,6 +500,20 @@ function process(linenumber, data) {
 								data[headers.getPosition(headers.SOURCE)],
 								function(error, results) {
 									if(error) { logger.error(`** aggressors.scan: error >> ${error}`); return callback(error); }
+								});
+						}
+						callback();
+					},
+					function(callback) {
+						if(argv.all || argv.scanners) {
+							logger.trace(`** check scanners: `);
+							logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
+							logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
+							scanners.scan(
+								data[headers.getPosition(headers.SOURCE)],
+								data[headers.getPosition(headers.STATUSCODE)],
+								function(error, results) {
+									if(error) { logger.error(`** scanners.scan: error >> ${error}`); return callback(error); }
 								});
 						}
 						callback();

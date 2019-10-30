@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="js/headersjson.js"></script>
 	<script type="text/javascript" src="js/methodsjson.js"></script>
 	<script type="text/javascript" src="js/useragentsjson.js"></script>
+	<script type="text/javascript" src="js/scannersjson.js"></script>
 	<link rel='stylesheet' href='css/style.css'>
 </head>
 
@@ -35,6 +36,7 @@
 							<a class="dropdown-item" data-toggle="modal" data-target="#allModal">All</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" data-toggle="modal" data-target="#aggressorsModal">Aggressors</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#scannersModal">Scanners</a>
 							<a class="dropdown-item" data-toggle="modal" data-target="#creditcardsModal">Credit Cards</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" data-toggle="modal" data-target="#xssModal">XSS</a>
@@ -64,6 +66,9 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#Aggressors">Aggressors</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#Aggressors">Scanners</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#XSS">XSS</a>
@@ -139,6 +144,35 @@
 									<input id="aggressorsCount" value="10" type="text" class="form-control">
 									<div class="input-group-append">
 										<button class="btn btn-primary" name="aggressors" type="button">Refresh</button>
+										<button class="btn btn-primary" name="clear" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<output name="out"></output>
+				</div>
+			</div>
+			<div id="Scanners" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileScanners">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressScanners" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<input id="scannersCount" value="10" type="text" class="form-control">
+									<div class="input-group-append">
+										<button class="btn btn-primary" name="scanners" type="button">Refresh</button>
 										<button class="btn btn-primary" name="clear" type="button">Clear</button>
 									</div>
 								</div>
@@ -373,6 +407,37 @@
 						This is the long hand version of the swtiches that can be used to scan for aggressive sources.<br>
 						<br>
 						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --aggressors --aggressors_display 10</kbd></button>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="scannersModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Scanners</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to scan for scanning activity. In this example the top 10 results will be displayed during the scan.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --s --sd 10</kbd></button>
+						<br>
+						<br>
+						This will create a file called scanners.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the swiches that can be used to scan for scanning activity.<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i test.log -c test.headers --scanners --scanners_display 10</kbd></button>
 					</p>
 				</div>
 				<div class="modal-footer">
