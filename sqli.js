@@ -70,7 +70,7 @@ module.exports = {
           findings.push(finding);
         }
       });
-      if(!isEmpty(findings)) {
+      if(!utilities.isEmpty(findings)) {
         map.set(linenumber, findings);
       }
     } catch (error) {

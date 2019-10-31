@@ -17,18 +17,6 @@ const statuscodes = require('./statuscodes.js');
 const useragents = require('./useragents.js');
 const payloads = require('./payloads.js');
 
-
-/*
-	var rr = {
-		servername: {},
-	    request: {
-	      http: {
-	      	url: {}
-	      }
-	    }
-	};
-*/
-
 /*
  *	Parse the arguements
  */
@@ -52,6 +40,12 @@ const argv = yargs
 		all: {
 			alias: 'all',
 			description: 'Scan using all the modules',
+			boolean: true,
+			default: false
+		},
+		test: {
+			alias: 't',
+			description: 'Write the output to test filenames',
 			boolean: true,
 			default: false
 		},
@@ -262,7 +256,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** aggressors.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/aggressors.json', data, (err) => {
+			let filename = 'data/aggressors.json';
+			if(argv.test) {
+				filename = 'data/test_aggressors.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** aggressors.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -274,7 +272,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** scanners.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/scanners.json', data, (err) => {
+			let filename = 'data/scanners.json';
+			if(argv.test) {
+				filename = 'data/test_scanners.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** scanners.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -286,7 +288,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** xss.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/xss.json', data, (err) => {
+			let filename = 'data/xss.json';
+			if(argv.test) {
+				filename = 'data/test_xss.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** xss.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -298,7 +304,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** xss.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/sqli.json', data, (err) => {
+			let filename = 'data/sqli.json';
+			if(argv.test) {
+				filename = 'data/test_sqli.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** sqli.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -310,7 +320,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** creditcards.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/creditcards.json', data, (err) => {
+			let filename = 'data/creditcards.json';
+			if(argv.test) {
+				filename = 'data/test_creditcards.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** creditcards.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -322,7 +336,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** headers.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/headers.json', data, (err) => {
+			let filename = 'data/headers.json';
+			if(argv.test) {
+				filename = 'data/test_headers.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** headers.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -334,7 +352,11 @@ function complete(rowCount) {
 			if(error) { logger.error(`** methods.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/methods.json', data, (err) => {
+			let filename = 'data/methods.json';
+			if(argv.test) {
+				filename = 'data/test_methods.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** methods.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
@@ -346,18 +368,16 @@ function complete(rowCount) {
 			if(error) { logger.error(`** useragents.asJSON: error >> ${error}`); }
 
 			let data = JSON.stringify(result, null, 2);
-			fs.writeFile('data/useragents.json', data, (err) => {
+			let filename = 'data/useragents.json';
+			if(argv.test) {
+				filename = 'data/test_useragents.json';
+			}
+			fs.writeFile(filename, data, (err) => {
 				if(err) { logger.error(`** useragents.asJSON: error >> ${err}`); }
 				logger.info('Data written to file');
 			});
 		});
 	}
-
-	/*
-		statuscodes.results(function(result) {
-
-		});
-	*/
 }
 
 var precheckcount = 0;

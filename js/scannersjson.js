@@ -83,14 +83,22 @@ document.addEventListener("DOMContentLoaded", () => {
       let row = tbl.insertRow();
       for(let prop in x) {
         if(Array.isArray(x[prop])) {
+          let nestedDiv = document.createElement("div");
+          nestedDiv.classList.add("table-responsive");
+
           let nestedTable = document.createElement("table");
+          nestedTable.classList.add("table");
+          nestedTable.classList.add("table-hover");
+          nestedTable.classList.add("table-striped");
+          nestedDiv.appendChild(nestedTable);
+
           for(item of x[prop]) {
             let nestedRow = nestedTable.insertRow();
             for(let p in item) {
               nestedRow.insertCell().innerText = item[p];
             }
           }
-          row.insertCell().appendChild(nestedTable);
+          row.insertCell().appendChild(nestedDiv);
         } else {
           row.insertCell().innerText = x[prop];
         }
