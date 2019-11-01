@@ -15,7 +15,12 @@ const sqli = require('./sqli.js');
 const xss = require('./xss.js');
 const statuscodes = require('./statuscodes.js');
 const useragents = require('./useragents.js');
+const filters = require('./filters.js');
 const payloads = require('./payloads.js');
+
+
+var precheckcount = 0;
+
 
 /*
  *	Parse the arguements
@@ -49,9 +54,26 @@ const argv = yargs
 			boolean: true,
 			default: false
 		},
+		filters: {
+			alias: 'f',
+			description: 'Filter out the activity of a particular source',
+			boolean: true,
+			default: false
+		},
+		filters_sources: {
+			alias: 'fs',
+			type: 'array',
+			description: 'A list of sources you are interested in',
+			requiresArg: true
+		},
+		filters_output: {
+			alias: 'fo',
+			description: 'Where to save the output',
+			requiresArg: true
+		},
 		aggressors: {
 			alias: 'a',
-			description: 'Ananlyse the most agressive sources',
+			description: 'Analyse the most agressive sources',
 			boolean: true,
 			default: false
 		},
@@ -212,6 +234,10 @@ function init() {
 			}
 			if(!argv.payloads) {
 				logger.info(`** skipping checks for dodgy payloads: `);
+			}
+			if(!argv.filters) {
+				logger.info(`** skipping filtering: `);
+
 			}
 		}
 	}
@@ -378,9 +404,24 @@ function complete(rowCount) {
 			});
 		});
 	}
+	if(argv.filters) {
+		logger.trace(`Write filters as json`);
+		filters.asJSON(function(error, result) {
+			if(error) { logger.error(`** filters.asJSON: error >> ${error}`); }
+
+			let data = JSON.stringify(result, null, 2);
+			let filename = 'data/' + argv.filters_output + '.json';
+			if(argv.test) {
+				filename = 'data/test_' + argv.filters_output + '.json';
+			}
+			fs.writeFile(filename, data, (err) => {
+				if(err) { logger.error(`** filters.asJSON: error >> ${err}`); }
+				logger.info('Data written to file');
+			});
+		});
+	}
 }
 
-var precheckcount = 0;
 
 function process(linenumber, data) {
 
@@ -535,6 +576,24 @@ function process(linenumber, data) {
 								function(error, results) {
 									if(error) { logger.error(`** scanners.scan: error >> ${error}`); return callback(error); }
 								});
+						}
+						callback();
+					},
+					function(callback) {
+						if(argv.all || argv.filters) {
+							logger.trace(`** check filters: `);
+							if(argv.filters_sources.includes(data[headers.getPosition(headers.SOURCE)])) {
+								logger.trace(`headers.getPosition(headers.SOURCE) ${headers.getPosition(headers.SOURCE)}`);
+								logger.trace(`headers.getPosition(headers.TIMESTAMP) ${headers.getPosition(headers.TIMESTAMP)}`);
+								logger.trace(`headers.getPosition(headers.STATUSCODE) ${headers.getPosition(headers.STATUSCODE)}`);
+								filters.scan(
+									data[headers.getPosition(headers.SOURCE)],
+									data[headers.getPosition(headers.TIMESTAMP)],
+									data[headers.getPosition(headers.STATUSCODE)],
+									function(error, results) {
+										if(error) { logger.error(`** filters.scan: error >> ${error}`); return callback(error); }
+									});
+							}
 						}
 						callback();
 					},

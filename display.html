@@ -37,6 +37,7 @@
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" data-toggle="modal" data-target="#aggressorsModal">Aggressors</a>
 							<a class="dropdown-item" data-toggle="modal" data-target="#scannersModal">Scanners</a>
+							<a class="dropdown-item" data-toggle="modal" data-target="#filtersModal">Filters</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" data-toggle="modal" data-target="#xssModal">XSS</a>
 							<a class="dropdown-item" data-toggle="modal" data-target="#sqliModal">SQLi</a>
@@ -376,6 +377,50 @@
 						<br>
 						<br>
 						This will create a file called aggressors.json, xss.json, sqli.json etc and will be, by default in the data folder.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="filtersModal">
+		<div class="modal-dialog mw-100 w-75">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Help on Filters</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>
+						This is the short hand version of the switches that can be used to filter out defined sources.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --f --fs 10.10.10.10 --fo outputfilename</kbd></button>
+						<br>
+						<br>
+						OR
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --f --fs 10.10.10.10 --fs 11.11.11.11 --fs 12.12.12.12 --fo outputfilename</kbd></button>
+						<br>
+						<br>
+						This will create a file called outputfilename.json and will be, by default in the data folder.
+					</p>
+					<br>
+					<br>
+					<p>
+						This is the long hand version of the switches that can be used to filter out defined sources.
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --filters --filters_sources 10.10.10.10 --filters_output outputfilename</kbd></button>
+						<br>
+						<br>
+						OR
+						<br>
+						<br>
+						<button type="button" class="btn btn-info"><kbd>node runner.js -i data/test.log -c data/test.headers --filters --filters_sources 10.10.10.10 --filters_sources 11.11.11.11 --filters_sources 12.12.12.12 --filters_output outputfilename</kbd></button>
 					</p>
 				</div>
 				<div class="modal-footer">
