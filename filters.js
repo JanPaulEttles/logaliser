@@ -6,11 +6,17 @@ const map = new Map();
 
 
 //node runner.js -i data/test.log -c data/test.headers --test --f --fs 15.12.12.12 --fs 16.12.12.12 --fo jan
+const dateformat = /\d{2}\/[a-zA-Z]{3}\/\d{4}:\d{2}:\d{2}:\d{2}/g;
+
 module.exports = {
     scan: function(source, timestamp, status, callback) {
         try {
-            logger.info(`${source}, ${timestamp}, ${status}`);
+            logger.trace(`${source}, ${timestamp}, ${status}`);
 
+            logger.info(timestamp.match(dateformat));
+            timestamp = timestamp.match(dateformat)[0].replace(":", ' ');
+            ////logger.info(regex.exec(timestamp));
+            //logger.info(JSON.stringify(timestamp.match(dateformat), null, 2));
             if(map.get(source) === undefined) {
                 var entries = [];
                 var entry = {};
@@ -46,11 +52,13 @@ module.exports = {
                 json.source = key;
                 value.forEach(function(item, index) {
                     var entry = {
-                        status: {},
-                        timestamp: {}
+                        timestamp: {},
+                        status: {}
+
                     }
-                    entry.status = item.status;
+
                     entry.timestamp = item.timestamp;
+                    entry.status = item.status;
 
                     json.entries.push(entry);
                 });

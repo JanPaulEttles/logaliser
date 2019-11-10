@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="js/methodsjson.js"></script>
 	<script type="text/javascript" src="js/useragentsjson.js"></script>
 	<script type="text/javascript" src="js/scannersjson.js"></script>
+	<script type="text/javascript" src="js/sourcehistoryjson.js"></script>
 	<link rel='stylesheet' href='css/style.css'>
 </head>
 
@@ -88,6 +89,9 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#UserAgents">User Agents</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#SourceHistory">Source History</a>
 			</li>
 		</ul>
 		<div class="tab-content">
@@ -328,6 +332,38 @@
 				</div>
 				<div class="container-fluid">
 					<output name="out"></output>
+				</div>
+			</div>
+			<div id="SourceHistory" class="container-fluid tab-pane fade"><br>
+				<div class="container-fluid">
+					<form>
+						<div class="row">
+							<div class="col">
+								<div class="custom-file">
+									<input class="custom-file-input" type="file" id="fileSourceHistory">
+									<label class="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="progress mt-2 mb-2">
+									<div id="progressSourceHistory" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="input-group mb-3">
+									<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+										<div class="btn-group" role="group" aria-label="First group">
+											<button type="button" id="daySourceHistory" class="btn btn-secondary">Day</button>
+											<button type="button" id="weekSourceHistory" class="btn btn-secondary">Week</button>
+											<button type="button" id="monthSourceHistory" class="btn btn-secondary">Month</button>
+											<button type="button" id="yearSourceHistory" class="btn btn-secondary">Year</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="container-fluid">
+					<canvas name="out"></canvas>
 				</div>
 			</div>
 			<div id="UserAgents" class="container-fluid tab-pane fade"><br>
@@ -711,7 +747,8 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
 	<script>
 	$(document).ready(function() {
 		$(".nav-tabs a").click(function() {
