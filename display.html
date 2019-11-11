@@ -352,6 +352,7 @@
 								<div class="input-group mb-3">
 									<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
 										<div class="btn-group" role="group" aria-label="First group">
+											<button type="button" id="secondSourceHistory" class="btn btn-secondary">Second</button>
 											<button type="button" id="minuteSourceHistory" class="btn btn-secondary">Minute</button>
 											<button type="button" id="hourSourceHistory" class="btn btn-secondary">Hour</button>
 											<button type="button" id="daySourceHistory" class="btn btn-secondary">Day</button>
@@ -752,17 +753,19 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.1">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.4"></script>
 	<script>
 	$(document).ready(function() {
 		$(".nav-tabs a").click(function() {
 			$(this).tab('show');
 		});
-
 		$(".modal-body button").click(function() {
 			//$(this).tab('show');
 			//alert($(this).text());
 			//$(this).select();
-
 			var text = $(this).text();
 			var el = $(this);
 			var copyTextArea = document.createElement("textarea");
@@ -774,7 +777,6 @@
 			el.attr('data-original-title', msg).tooltip('show');
 			document.body.removeChild(copyTextArea);
 		});
-
 	});
 	</script>
 </body>

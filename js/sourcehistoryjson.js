@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let form = document.querySelector("#SourceHistory form");
 
+  document.querySelector("#secondSourceHistory").addEventListener("click", () => {
+    generate('second', data);
+  })
   document.querySelector("#minuteSourceHistory").addEventListener("click", () => {
     generate('minute', data);
   })
@@ -105,12 +108,11 @@ function generate(period, data) {
       responsive: true,
       title: {
         display: true,
-        text: "Chart.js Time Scale"
+        text: "HTTP Status Codes vs Time"
       },
       scales: {
         xAxes: [{
-          barPercentage: 1,
-          barThickness: 3,
+          distribution: 'linear',
           offset: true,
           type: "time",
           time: {
@@ -127,19 +129,46 @@ function generate(period, data) {
             beginAtZero: true,
             callback: function(value) { if(value % 1 === 0) { return value; } }
           },
-          offset: true,
+
           scaleLabel: {
             display: true,
             labelString: 'Requests'
           }
         }]
+      },
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true,
+            mode: 'x',
+            speed: 10,
+            threshold: 10
+          },
+          zoom: {
+            enabled: true,
+            drag: {
+              borderColor: 'rgba(225,225,225,0.3)',
+              borderWidth: 5,
+              backgroundColor: 'rgb(225,225,225)',
+              animationDuration: 1000
+            },
+            mode: 'x',
+            speed: 0.05
+          }
+        }
       }
     }
   };
 
-  var chart = new Chart(ctx, cfg);
+  if(typeof chart != 'undefined') {
+    chart.destroy();
+  }
+  chart = new Chart(ctx, cfg);
+  //chart.destroy();
   chart.update();
 }
+
+var chart;
 
 function getColour(status) {
   let colour = '';
@@ -174,6 +203,8 @@ function format(data) {
       data: formattimestamps(elem.timestamps),
       backgroundColor: getColour(elem.status),
       borderWidth: 2,
+      barThickness: 3,
+      barPercentage: 1,
       fill: false
     }
   })
