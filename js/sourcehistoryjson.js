@@ -50,6 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let form = document.querySelector("#SourceHistory form");
 
+  document.querySelector("#minuteSourceHistory").addEventListener("click", () => {
+    generate('minute', data);
+  })
+  document.querySelector("#hourSourceHistory").addEventListener("click", () => {
+    generate('hour', data);
+  })
   document.querySelector("#daySourceHistory").addEventListener("click", () => {
     generate('day', data);
   })
@@ -81,8 +87,6 @@ function generate(period, data) {
     consle.log('no data');
     return;
   }
-
-  //console.log(data.entries);
 
   let ctx = document.querySelector("#SourceHistory div canvas");
   //console.log(ctx);
@@ -140,27 +144,24 @@ function generate(period, data) {
 function getColour(status) {
   let colour = '';
   switch (true) {
-    case (status > 0 && status < 100):
-      colour = 'rgba(64, 16, 0, 0.6)';
-      break;
     case (status >= 100 && status < 200):
-      colour = 'rgba(16, 64, 0, 0.6)';
+      colour = 'rgba(0, 123, 255, 0.6)'; //primary
       break;
     case (status >= 200 && status < 300):
-      colour = 'rgba(16, 255, 16, 0.6)';
+      colour = 'rgba(40, 167, 69, 0.6)'; //success
       break;
     case (status >= 300 && status < 400):
-      colour = 'rgba(128, 64, 255, .6)';
+      colour = 'rgba(23, 162, 184, .6)'; //info
       break;
     case (status >= 400 && status < 500):
-      colour = 'rgba(128, 128, 128, 0.6)';
+      colour = 'rgba(108, 117, 125, 0.6)'; //secondary
       break;
     case (status >= 500 && status < 600):
-      colour = 'rgba(255, 16, 16, 0.6)';
+      colour = 'rgba(255, 193, 7, 0.6)'; //warning
       break;
 
     default:
-      colour = 'rgba(255, 0, 0, 0.6)';
+      colour = 'rgba(220, 53, 69, 0.6)'; //danger
   }
   return colour;
 
@@ -177,7 +178,7 @@ function format(data) {
     }
   })
 
-  return formatted;
+  return formatted.sort((a, b) => a.label - b.label);
 
 }
 
